@@ -1,8 +1,6 @@
 import tkinter
 from inventario import Inventario
-import inventario as inventario
 from PIL import Image, ImageTk
-import inventario
 
 BLUE = "#0766AD" #Para lo del telcel
 LESS_BLUE = "#29ADB2"
