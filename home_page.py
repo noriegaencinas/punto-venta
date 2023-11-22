@@ -1,4 +1,5 @@
 import tkinter
+from inventario import Inventario
 from PIL import Image, ImageTk
 
 BLUE = "#0766AD" #Para lo del telcel
@@ -46,14 +47,18 @@ class HomePage:
         image_pedidos = self.format_image_for_menu(path="images/pedidos.png")
         boton_pedidos = tkinter.Button(text="a", image=image_pedidos, compound="top")
         boton_pedidos.grid(column=3, row=0)
-
+        def interface_inventario():
+            inventario = Inventario()
         image_inventario = self.format_image_for_menu(path="images/inventario.png")
-        boton_inventario = tkinter.Button(text="a", image=image_inventario, compound="top")
+        boton_inventario = tkinter.Button(text="a", image=image_inventario, compound="top", command=interface_inventario)
         boton_inventario.grid(column=4, row=0)
 
         image_lista_inventario = self.format_image_for_menu(path="images/inventario_lista.png")
         boton_lista_inventario = tkinter.Button(text="a", image=image_lista_inventario, compound="top")
         boton_lista_inventario.grid(column=5, row=0)
+
+        import inventario
+
 
         image_caja_movimientos = self.format_image_for_menu(path="images/entrada_salida_dinero.png")
         boton_caja_movimientos = tkinter.Button(text="a", image=image_caja_movimientos, compound="top")
@@ -96,5 +101,7 @@ class HomePage:
         new_photo_image = ImageTk.PhotoImage(new_image)
         new_image.close()
         return new_photo_image
+
+
 
 
