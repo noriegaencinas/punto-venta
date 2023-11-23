@@ -86,8 +86,8 @@ class Inventario:
         resultado_text.place(x=130, y=200)
 
         # Etiqueta y Menú desplegable para Tipo de Movimiento
-        tipo_movimiento_label = Label(root, text='Tipo Movimiento').place(x=20, y=20)
-        opciones_tipo_movimiento = ['Incremento', 'Decremento']
+        tipo_movimiento_label = Label(root, text='Tipo Movimiento').place(x=300, y=320)
+        opciones_tipo_movimiento = ['Entrada', 'Salida']
         seleccion_tipo_movimiento = StringVar()
         seleccion_tipo_movimiento.set(opciones_tipo_movimiento[0])  # Establecer el valor predeterminado
         tipo_movimiento_menu = OptionMenu(root, seleccion_tipo_movimiento, *opciones_tipo_movimiento)
@@ -118,11 +118,11 @@ class Inventario:
                     tipo_movimiento = seleccion_tipo_movimiento.get()
 
                     # Realizar la actualización del inventario
-                    if tipo_movimiento == 'Incremento':
+                    if tipo_movimiento == 'Entrada':
                         # Incrementar la cantidad en la base de datos
                         actualizar_inventario_query = "UPDATE productos SET CantidadInventario = CantidadInventario + %s WHERE ProductoID = %s"
                         conexion.execute(actualizar_inventario_query, (cantidad, producto_id_str))
-                    elif tipo_movimiento == 'Decremento':
+                    elif tipo_movimiento == 'Salida':
                         # Decrementar la cantidad en la base de datos
                         actualizar_inventario_query = "UPDATE productos SET CantidadInventario = CantidadInventario - %s WHERE ProductoID = %s"
                         conexion.execute(actualizar_inventario_query, (cantidad, producto_id_str))
@@ -145,7 +145,6 @@ class Inventario:
                     messagebox.showinfo("Éxito", "Movimiento completado con éxito.")
 
                 except ValueError:
-                    # Manejar el caso en que la conversión a entero falla
                     resultado_text.delete(1.0, "end")
                     resultado_text.insert("end", "Error: Ingresa un valor numérico válido\n")
 
