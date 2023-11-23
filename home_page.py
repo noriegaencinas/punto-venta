@@ -57,9 +57,6 @@ class HomePage:
         boton_lista_inventario = tkinter.Button(text="a", image=image_lista_inventario, compound="top")
         boton_lista_inventario.grid(column=5, row=0)
 
-        import inventario
-
-
         image_caja_movimientos = self.format_image_for_menu(path="images/entrada_salida_dinero.png")
         boton_caja_movimientos = tkinter.Button(text="a", image=image_caja_movimientos, compound="top")
         boton_caja_movimientos.grid(column=6, row=0)

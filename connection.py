@@ -5,14 +5,20 @@ mydb = mysql.connector.connect( # Parametros que necesitamos para la conexion a 
     user='root',
     password='',
     port='3306',
-    database='distribuidor'
+    database='distribuidoratelcel'
 )
 
-mycursor = mydb.cursor() # Es el objeto para ejecutar las statements y comunicarse con mysql
+def ejecutar_instruccion(statement):
+    mycursor = mydb.cursor() # Es el objeto para ejecutar las statements y comunicarse con mysql
 
-mycursor.execute("Select * from productos") # Instruccion a realizar
+    #print(statement)
+    mycursor.execute(statement) # Instruccion a realizar
 
-productos = mycursor.fetchall() # Devuelve una lista de tuples de nuestra instruccion
+    resultado = mycursor.fetchall() # Devuelve una lista de tuples de nuestra instruccion
+    #print(len(resultado))
 
-for producto in productos:
-    print(producto)
+    for i in resultado:
+        print(i)
+
+    return len(resultado) > 0
+
