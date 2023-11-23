@@ -12,17 +12,34 @@ LIGHT_BLUE = "#E0F4FF"
 LIGHT_BLUE2 = "#87C4FF"
 MENU_IMAGE_WIDTH = 50
 MENU_IMAGE_HEIGHT = 50
-MENU_BUTTON_WIDTH = 105
+MENU_BUTTON_WIDTH = 104
 MENU_BUTTON_HEIGHT = 80
 
 class HomePage:
     def __init__(self):
-        #Configuracion inicial de la venta en general
+        #Configuracion inicial de la ventana en general
+        customtkinter.set_appearance_mode("dark")
+        customtkinter.set_default_color_theme("dark-blue")
+
         window = customtkinter.CTk()
         window.title("Punto de venta")  # Title of the window
         window.minsize(width=1280, height=720)  # Minimum size of the window
-        window.config(bg=LIGHT_BLUE)
+        #window.config(bg=LIGHT_BLUE)
         window.geometry("1280x720")
+
+        # Dimensiones de la pantalla
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+
+        # Dimensiones de la ventana
+        window_width = 1280
+        window_height = 720
+
+        # Calcular las coordenadas para centrar la ventana
+        x_coordinate = (screen_width - window_width) // 2
+        y_coordinate = (screen_height - window_height) // 2
+
+        window.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
 
         """
         #Creacion del menu
@@ -32,11 +49,6 @@ class HomePage:
         menu_bar.add_cascade(label="archivo", menu=menu1)  # Al menu principal le asignamos los menus
         menu1.add_command(label="Nuevo")  # Son los menuitems, pueden tener funciones
         """
-
-        # Canvas donde van a estar la mayoria de las opciones para el empleado
-        #canvas_menu = tkinter.Canvas(width=1280, height=120, bg=LIGHT_BLUE2, highlightthickness=0)
-        #canvas_menu.grid(column=0, row=0)
-        #
 
         def boton_venta():
             pass
@@ -110,14 +122,11 @@ class HomePage:
         boton_salir = customtkinter.CTkButton(master=window, text="Salir", image=image_salir, compound="top", command=boton_salir, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_salir.grid(column=11, row=0)
 
-
-        """
-        # Canvas para solo el logo de la aplicacion
-        canvas_blank = tkinter.Canvas(width=860, height=220, highlightthickness=0, bg=GRAY)
-        #canvas_blank.grid(x=0, row=1)
-        logo = tkinter.PhotoImage(file="images/logo.png")
-        canvas_blank.create_image(430, 110, image=logo)
-        """
+        # Cargar imagen
+        logo_image_path = "images/logo.png"
+        logo_image = customtkinter.CTkImage(dark_image=Image.open(logo_image_path), light_image=Image.open(logo_image_path), size=(500, 250))
+        # Usar imagen label
+        logo_image_label = customtkinter.CTkLabel(master=window, image=logo_image, text="", fg_color="transparent").place(x=x_coordinate,y=y_coordinate)
 
         window.mainloop()  # Permite que la ventana no se cierre.
 
