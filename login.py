@@ -33,7 +33,11 @@ class Login:
             password = entry_password.get()
             print(usuario + " " + password)
             autorizacion = connection.ejecutar_instruccion(statement='SELECT * FROM empleados WHERE NombreUsuario = "' + usuario + '" AND Password = "' + password + '"')
+            if autorizacion == 0:
+                self.attempts += 1
+
             return autorizacion
+
 
         frame = customtkinter.CTkFrame(master=window)
         frame.pack(pady=10,padx=10, fill="both", expand=True)
@@ -50,8 +54,10 @@ class Login:
         button_login = customtkinter.CTkButton(master=frame, text="Login", command=login)
         button_login.pack(pady=12, padx=10)
 
+        #Cargar imagen
         logo_image_path = "images/logo_chico.png"
-        logo_image = customtkinter.CTkImage(dark_image=Image.open(logo_image_path), size=(100, 100))
+        logo_image = customtkinter.CTkImage(dark_image=Image.open(logo_image_path), size=(270, 153))
+        #Usar imagen label
         logo_image_label = customtkinter.CTkLabel(master=frame, image=logo_image, text="")
         logo_image_label.pack(pady=12, padx=10)
 
