@@ -14,7 +14,7 @@ MENU_IMAGE_WIDTH = 50
 MENU_IMAGE_HEIGHT = 50
 MENU_BUTTON_WIDTH = 104
 MENU_BUTTON_HEIGHT = 80
-
+a
 class HomePage:
     def __init__(self):
         #Configuracion inicial de la ventana en general
