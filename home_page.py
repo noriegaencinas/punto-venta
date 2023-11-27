@@ -1,9 +1,16 @@
 import tkinter
-from inventario import Inventario
-from PIL import Image, ImageTk
 import customtkinter
+from PIL import Image, ImageTk
+
+from inventario import Inventario
 from ventana_general import *
 import empresa
+import pedido
+import venta
+import producto
+import usuarios
+import acerca_de
+import articulo
 
 BLUE = "#0766AD" #Para lo del telcel
 LESS_BLUE = "#29ADB2"
@@ -32,7 +39,6 @@ class HomePage(Ventana):
         """
 
         def boton_venta():
-            test = HomePage()
             pass
         image_venta = customtkinter.CTkImage(dark_image=Image.open("images/venta.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_venta = customtkinter.CTkButton(master=self.window, text="Venta", image=image_venta, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT,command=boton_venta)
@@ -51,9 +57,9 @@ class HomePage(Ventana):
         boton_articulos.grid(column=2, row=0)
 
         def boton_pedidos():
-            pass
+            test = pedido.Pedido(self.window, "200x200", "titulo")
         image_pedidos = customtkinter.CTkImage(dark_image=Image.open("images/pedidos.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_pedidos = customtkinter.CTkButton(master=self.window, text="Pedidos", image=image_pedidos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_pedidos = customtkinter.CTkButton(master=self.window, text="Pedidos", image=image_pedidos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_pedidos)
         boton_pedidos.grid(column=3, row=0)
         def interface_inventario():
             inventario = Inventario()
