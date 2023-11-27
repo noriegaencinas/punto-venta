@@ -5,7 +5,7 @@ mydb = mysql.connector.connect( # Parametros que necesitamos para la conexion a 
     user='root',
     password='',
     port='3306',
-    database='distribuidoratelcel'
+    database='distribuidor'
 )
 
 def ejecutar_instruccion(statement):
