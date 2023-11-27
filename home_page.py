@@ -18,8 +18,8 @@ MENU_BUTTON_HEIGHT = 80
 
 class HomePage(VentanaGeneral):
     def __init__(self):
-        super().__init__("1280x720", "ejemplo")
-        # label1 = customtkinter.CTkLabel(x.window, text="hola", text_color="white").place(x=100,y=100)
+        #Creacion de la ventana general
+        super().__init__("1280x720", "Pagina principal")
 
         """
         #Creacion del menu

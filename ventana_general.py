@@ -4,6 +4,7 @@ class VentanaGeneral:
     def __init__(self, ventana_dimension:str, titulo_ventana:str):
         """Recibe dos variables ventana_dimension en forma de string con 'widthxheight' y el titulo_ventana 'titulo'"""
 
+        # Dimesiones de la ventana
         self.win_width = int(ventana_dimension.split("x")[0])
         self.win_height = int(ventana_dimension.split("x")[1])
 
@@ -12,7 +13,7 @@ class VentanaGeneral:
 
         self.window = customtkinter.CTk()
         self.window.title(titulo_ventana)  # Title of the window
-        self.window.minsize(width=self.win_width, height=self.win_height)  # Minimum size of the window
+        #self.window.minsize(width=self.win_width, height=self.win_height)  # Minimum size of the window
         self.window.resizable(False, False)
 
         # Dimensiones de la pantalla
@@ -25,11 +26,14 @@ class VentanaGeneral:
 
         self.window.geometry(f"{self.win_width}x{self.win_height}+{self.x_coordinate}+{self.y_coordinate}")
 
-
-
-    def algo(self):
-        print("x")
+    def testSizes(self):
+        print(f"window width{self.win_width} window height{self.win_height}")
+        print(f"screen width{self.screen_width} screen height{self.screen_width}")
+        print(f"center estimation {self.x_coordinate} , {self.y_coordinate}")
 
 # Para testear el codigo
 if __name__ == '__main__':
     test = VentanaGeneral("1280x720", "Punto de venta")
+    test.testSizes()
+    test.window.mainloop()
+
