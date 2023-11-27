@@ -1,10 +1,12 @@
 from ventana_general import *
 
-class Test(VentanaGeneral):
+class Test(Ventana):
     def __init__(self):
-        super().__init__("600x300", "")
+        test1 = Ventana("200x100", "1")
+        test2 = Ventana("300x100", "2")
 
-        self.window.mainloop()
+        test2.window.mainloop()
+        test1.window.mainloop()
 
 # Para testear el codigo
 if __name__ == '__main__':

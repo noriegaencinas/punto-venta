@@ -1,10 +1,19 @@
+from PIL import Image
 from ventana_general import *
+import customtkinter
 
-class Empresa(VentanaGeneral):
-    def __init__(self):
-        super().__init__("1280x720", "Empresa")
+MENU_IMAGE_WIDTH = 50
+MENU_IMAGE_HEIGHT = 50
+MENU_BUTTON_WIDTH = 104
+MENU_BUTTON_HEIGHT = 80
 
-        self.window.mainloop()
+class Empresa(SubVentana):
+    def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
+        super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
+
+
+
+
 
 # Para testear el codigo
 if __name__ == '__main__':

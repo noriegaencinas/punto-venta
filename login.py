@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 import connection
 from ventana_general import *
 
-class Login(VentanaGeneral):
+class Login(Ventana):
     def __init__(self):
         super().__init__("400x400", "Inicio de sesion")
 

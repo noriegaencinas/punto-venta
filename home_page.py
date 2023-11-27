@@ -3,6 +3,7 @@ from inventario import Inventario
 from PIL import Image, ImageTk
 import customtkinter
 from ventana_general import *
+import empresa
 
 BLUE = "#0766AD" #Para lo del telcel
 LESS_BLUE = "#29ADB2"
@@ -16,7 +17,7 @@ MENU_IMAGE_HEIGHT = 50
 MENU_BUTTON_WIDTH = 104
 MENU_BUTTON_HEIGHT = 80
 
-class HomePage(VentanaGeneral):
+class HomePage(Ventana):
     def __init__(self):
         #Creacion de la ventana general
         super().__init__("1280x720", "Pagina principal")
@@ -31,9 +32,10 @@ class HomePage(VentanaGeneral):
         """
 
         def boton_venta():
+            test = HomePage()
             pass
         image_venta = customtkinter.CTkImage(dark_image=Image.open("images/venta.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_venta = customtkinter.CTkButton(master=self.window, text="Venta", image=image_venta, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_venta = customtkinter.CTkButton(master=self.window, text="Venta", image=image_venta, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT,command=boton_venta)
         boton_venta.grid(column=0, row=0)
 
         def boton_imprimir_recibo():
@@ -78,9 +80,9 @@ class HomePage(VentanaGeneral):
         boton_mov_dia.grid(column=7, row=0)
 
         def boton_empresa():
-            pass
+            test = empresa.Empresa(self.window, ventana_dimension="720x480", titulo_ventana="Empresa")
         image_empresa = customtkinter.CTkImage(dark_image=Image.open("images/empresa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_empresa = customtkinter.CTkButton(master=self.window, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_empresa = customtkinter.CTkButton(master=self.window, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
         boton_empresa.grid(column=8, row=0)
 
         def boton_usuarios():
