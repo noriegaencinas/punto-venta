@@ -1,3 +1,6 @@
+import json
+from tkinter import messagebox
+
 from PIL import Image
 from ventana_general import *
 import customtkinter
@@ -38,8 +41,38 @@ class Empresa(SubVentana):
         label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
         label_pantalla.grid(row=0, column=1)
 
+        #filas_names = ["Nombre", "Eslogan", "Representante", "RFC", "Dirección", "Colonia", "Ciudad", "Estado", "Código Postal", "Teléfono", "Email"]
         def boton_guardar():
-            pass
+            check_blanks = [x.get("0.0", "end") for x in text_obj.values()] # Crea una lista del contenido actual del texto
+            new_data = {
+                "empresa info": {
+                    "Nombre": text_obj["Nombre"].get("0.0", "end").strip(),
+                    "Eslogan": text_obj["Eslogan"].get("0.0", "end").strip(),
+                    "Representante": text_obj["Representante"].get("0.0", "end").strip(),
+                    "RFC": text_obj["RFC"].get("0.0", "end").strip(),
+                    "Dirección": text_obj["Dirección"].get("0.0", "end").strip(),
+                    "Colonia": text_obj["Colonia"].get("0.0", "end").strip(),
+                    "Ciudad": text_obj["Ciudad"].get("0.0", "end").strip(),
+                    "Estado": text_obj["Estado"].get("0.0", "end").strip(),
+                    "Código Postal": text_obj["Código Postal"].get("0.0", "end").strip(),
+                    "Teléfono": text_obj["Teléfono"].get("0.0", "end").strip(),
+                    "Email": text_obj["Email"].get("0.0", "end").strip()
+                }
+            }
+            if "\n" in check_blanks or " " in check_blanks:
+                messagebox.showerror(title="Error", message="You should not leave any fields empty")
+            else:
+                try:
+                    with open(file="data_empresa.json", mode="r") as data_file:
+                        data = json.load(data_file)
+                except FileNotFoundError:
+                    with open(file="data_empresa.json", mode="w") as data_file:
+                        json.dump(new_data, data_file, indent=4)
+                else:
+                    data.update(new_data)
+                    with open(file="data_empresa.json", mode="w") as data_file:
+                        json.dump(data, data_file, indent=4)
+
         image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top", command=boton_guardar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_guardar.grid(column=0, row=0)
@@ -65,98 +98,45 @@ class Empresa(SubVentana):
         entries_main_frame.place(x=0, y=0)
 
         entries_frame = customtkinter.CTkFrame(master=entries_main_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
-        entries_frame.pack(padx=20, pady=20)
+        entries_frame.pack(padx=20, pady=10)
 
         image_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         image_frame.place(x=(win_width // 2), y=0)
 
-        label_nombre = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
-        #label_nombre.pack(pady=5, padx=10, expand=False)
-        label_nombre.grid(column=0, row=0)
+        filas_names = ["Nombre", "Eslogan", "Representante", "RFC", "Dirección", "Colonia", "Ciudad", "Estado", "Código Postal", "Teléfono", "Email"]
+        label_obj = {}
+        text_obj = {}
 
-        entry_nombre = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        #entry_nombre.pack(pady=5, padx=10)
-        entry_nombre.grid(column=1, row=0)
+        """def search_button():
+    website_name = website_entry.get().lower()
+    try:
+        with open(file="data.json", mode="r") as file:
+            my_data = json.load(file)
+    except:
+        messagebox.showinfo(title="No data file found", message="No data file found")
+        pass
+    else:
+        if website_name in my_data:
+            inf = f"Email: {my_data[website_name]['email']} \n" \
+                  f"Password: {my_data[website_name]['password']}"
+            messagebox.showinfo(title=website_name, message=inf)
+        else:
+            messagebox.showinfo(title="Site was not found", message="Site was not found")"""
 
-        label_eslogan = customtkinter.CTkLabel(master=entries_frame, text="Eslogan", text_color="BLACK")
-        #label_eslogan.pack(pady=5, padx=10)
-        label_eslogan.grid(column=0, row=1)
+        with open(file="data_empresa.json", mode="r") as file:
+            my_data = json.load(file)
+            for i in range(0, len(filas_names)):
+                new_label = customtkinter.CTkLabel(master=entries_frame, text=filas_names[i], text_color="BLACK", height=12)
+                new_label.grid(column=0, row=i, pady=2)
 
-        entry_eslogan = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        #entry_eslogan.pack(pady=5, padx=10)
-        entry_eslogan.grid(column=1, row=1)
+                new_text = customtkinter.CTkTextbox(master=entries_frame, width=200, height=12)
+                new_text.insert("0.0", my_data["empresa info"][filas_names[i]])
+                new_text.grid(column=1, row=i, pady=2)
 
-        label_representante = customtkinter.CTkLabel(master=entries_frame, text="Representante", text_color="BLACK")
-        #label_representante.pack(pady=5, padx=10)
-        label_representante.grid(column=0, row=2)
+                label_obj[filas_names[i]] = new_label
+                text_obj[filas_names[i]] = new_text
 
-        entry_representante = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        #entry_representante.pack(pady=5, padx=10)
-        entry_representante.grid(column=1, row=2)
 
-        label_RFC = customtkinter.CTkLabel(master=entries_frame, text="RFC", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_RFC.grid(column=0, row=3)
-
-        entry_RFC = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_RFC.grid(column=1, row=3)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Direccion", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=4)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=4)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Colonia", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=5)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=5)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Ciudad", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=6)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=6)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Estado", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=7)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=7)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Código Postal", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=8)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=8)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Teléfono", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=9)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=9)
-
-        label_entry_direccion = customtkinter.CTkLabel(master=entries_frame, text="Email", text_color="BLACK")
-        # label_representanet.pack(pady=5, padx=10)
-        label_entry_direccion.grid(column=0, row=10)
-
-        entry_direccion = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_representanet.pack(pady=5, padx=10)
-        entry_direccion.grid(column=1, row=10)
 
         # Cargar imagen
         logo_image_path = "images/logo_distribuidora.png"
@@ -167,8 +147,8 @@ class Empresa(SubVentana):
 
 # Para testear el codigo
 if __name__ == '__main__':
-    test = Ventana("300x300", "titulo")
+    test = Ventana("300x400", "titulo")
 
-    test1 = Empresa(test.window, "720x480", "top")
+    test1 = Empresa(test.window, "720x520", "top")
 
     test.window.mainloop()

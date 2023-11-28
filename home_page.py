@@ -1,12 +1,15 @@
 import tkinter
-
-import acerca_de
-import usuarios
-from inventario import Inventario
+import packaging
 from PIL import Image, ImageTk
 import customtkinter
+
+import acerca_de
+import articulo
+import usuarios
+from inventario import Inventario
 from ventana_general import *
 import empresa
+
 
 BLUE = "#0766AD" #Para lo del telcel
 LESS_BLUE = "#29ADB2"
@@ -48,7 +51,7 @@ class HomePage(Ventana):
         boton_imprimir.grid(column=1, row=0)
 
         def boton_articulos():
-            pass
+            test_articulos = articulo.Articulo(self.window, ventana_dimension="960x540", titulo_ventana="Catalogo Articulos")
         image_articulos = customtkinter.CTkImage(dark_image=Image.open("images/articulos.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_articulos = customtkinter.CTkButton(master=self.window, text="Articulos", image=image_articulos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_articulos.grid(column=2, row=0)
@@ -83,7 +86,7 @@ class HomePage(Ventana):
         boton_mov_dia.grid(column=7, row=0)
 
         def boton_empresa():
-            test_empresa = empresa.Empresa(self.window, ventana_dimension="720x480", titulo_ventana="Empresa")
+            test_empresa = empresa.Empresa(self.window, ventana_dimension="720x520", titulo_ventana="Empresa")
         image_empresa = customtkinter.CTkImage(dark_image=Image.open("images/empresa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_empresa = customtkinter.CTkButton(master=self.window, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
         boton_empresa.grid(column=8, row=0)
