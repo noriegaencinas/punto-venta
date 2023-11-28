@@ -38,7 +38,7 @@ class Login(Ventana):
 
         # Cargar imagen
         logo_image_path = "images/logo_chico.png"
-        logo_image = customtkinter.CTkImage(dark_image=Image.open(logo_image_path), size=(270, 153))
+        logo_image = customtkinter.CTkImage(dark_image=Image.open(logo_image_path), light_image=Image.open(logo_image_path), size=(270, 153))
         # Usar imagen label
         logo_image_label = customtkinter.CTkLabel(master=self.frame, image=logo_image, text="")
         logo_image_label.pack(pady=12, padx=10)
