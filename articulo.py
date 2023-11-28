@@ -15,7 +15,7 @@ GRAY2 = "#D0D4CA"
 LIGHT_BLUE = "#E0F4FF"
 LIGHT_BLUE2 = "#87C4FF"
 
-class Empresa(SubVentana):
+class Articulo(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
 
@@ -23,11 +23,11 @@ class Empresa(SubVentana):
         win_width = int(ventana_dimension.split("x")[0])
         # win_height = int(ventana_dimension.split("x")[1])
 
-        menu_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=500, fg_color=LIGHT_BLUE2)
+        menu_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=500, fg_color=LIGHT_BLUE2, corner_radius=0)
         menu_frame.pack(fill="both", expand=False)
 
-        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height= 100, fg_color=BLUE)
-        menu_frame.pack(fill="both", expand=False)
+        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height= 10, fg_color=BLUE, corner_radius=0)
+        opciones_frame.pack(fill="both", expand=False)
 
         def boton_guardar():
             pass
@@ -47,6 +47,6 @@ class Empresa(SubVentana):
 if __name__ == '__main__':
     test = Ventana("300x300", "titulo")
 
-    test1 = Empresa(test.window, "720x480", "top")
+    test1 = Articulo(test.window, "720x480", "top")
 
     test.window.mainloop()
