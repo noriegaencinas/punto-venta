@@ -86,14 +86,6 @@ class Empresa(SubVentana):
         opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, fg_color=LIGHT_BLUE, corner_radius=0)
         opciones_frame.pack(fill="both", expand=True)
 
-        """
-        left_entries_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width//4), height=win_height, fg_color="BLUE", corner_radius=0, sticky='EW')
-        left_entries_frame.place(x=0, y=0)
-
-        right_entries_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 4), height=win_height, fg_color="GREEN", corner_radius=0, sticky='EW')
-        right_entries_frame.place(x=(win_width // 4), y=0)
-        """
-
         entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         entries_main_frame.place(x=0, y=0)
 
@@ -107,22 +99,6 @@ class Empresa(SubVentana):
         label_obj = {}
         text_obj = {}
 
-        """def search_button():
-    website_name = website_entry.get().lower()
-    try:
-        with open(file="data.json", mode="r") as file:
-            my_data = json.load(file)
-    except:
-        messagebox.showinfo(title="No data file found", message="No data file found")
-        pass
-    else:
-        if website_name in my_data:
-            inf = f"Email: {my_data[website_name]['email']} \n" \
-                  f"Password: {my_data[website_name]['password']}"
-            messagebox.showinfo(title=website_name, message=inf)
-        else:
-            messagebox.showinfo(title="Site was not found", message="Site was not found")"""
-
         with open(file="data_empresa.json", mode="r") as file:
             my_data = json.load(file)
             for i in range(0, len(filas_names)):
@@ -135,8 +111,6 @@ class Empresa(SubVentana):
 
                 label_obj[filas_names[i]] = new_label
                 text_obj[filas_names[i]] = new_text
-
-
 
         # Cargar imagen
         logo_image_path = "images/logo_distribuidora.png"
