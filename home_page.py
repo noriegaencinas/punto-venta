@@ -69,7 +69,7 @@ class HomePage(Ventana):
         def boton_inventario():
             test_inventario = inventario.Inventario(self.window, "200x200", "titulo")
         image_inventario = customtkinter.CTkImage(dark_image=Image.open("images/inventario.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_inventario = customtkinter.CTkButton(master=self.window, text="Inventarios", image=image_inventario, compound="top", command=interface_inventario, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_inventario = customtkinter.CTkButton(master=self.window, text="Inventarios", image=image_inventario, compound="top", command=boton_inventario, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_inventario.grid(column=4, row=0)
 
         def boton_lista_inventario():
