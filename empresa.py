@@ -65,7 +65,7 @@ class Empresa(SubVentana):
         entries_main_frame.place(x=0, y=0)
 
         entries_frame = customtkinter.CTkFrame(master=entries_main_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
-        entries_frame.pack(padx=10, pady=10)
+        entries_frame.pack(padx=20, pady=20)
 
         image_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         image_frame.place(x=(win_width // 2), y=0)

@@ -1,4 +1,7 @@
 import tkinter
+
+import acerca_de
+import usuarios
 from inventario import Inventario
 from PIL import Image, ImageTk
 import customtkinter
@@ -80,19 +83,20 @@ class HomePage(Ventana):
         boton_mov_dia.grid(column=7, row=0)
 
         def boton_empresa():
-            test = empresa.Empresa(self.window, ventana_dimension="720x480", titulo_ventana="Empresa")
+            test_empresa = empresa.Empresa(self.window, ventana_dimension="720x480", titulo_ventana="Empresa")
         image_empresa = customtkinter.CTkImage(dark_image=Image.open("images/empresa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_empresa = customtkinter.CTkButton(master=self.window, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
         boton_empresa.grid(column=8, row=0)
 
         def boton_usuarios():
+            #test_usuarios = usuarios.Usuario(self.window, ventana_dimension="720x480", titulo_ventana="Usuario")
             pass
         image_usuarios = customtkinter.CTkImage(dark_image=Image.open("images/usuarios.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_usuarios = customtkinter.CTkButton(master=self.window, text="Usuarios", image=image_usuarios, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_usuarios.grid(column=9, row=0)
 
         def boton_acerca_de():
-            pass
+            test_acerca_de = acerca_de.Acerca_de(self.window, ventana_dimension="500x600", titulo_ventana="Acerca de")
         image_acerca_de = customtkinter.CTkImage(dark_image=Image.open("images/acerca_de.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_acerca_de = customtkinter.CTkButton(master=self.window, text="Acerca de", image=image_acerca_de, compound="top", command=boton_acerca_de, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_acerca_de.grid(column=10, row=0)
