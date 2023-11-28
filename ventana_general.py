@@ -8,7 +8,7 @@ class Ventana:
         self.win_width = int(ventana_dimension.split("x")[0])
         self.win_height = int(ventana_dimension.split("x")[1])
 
-        customtkinter.set_appearance_mode("dark")
+        customtkinter.set_appearance_mode("light")
         customtkinter.set_default_color_theme("dark-blue")
 
         self.window = customtkinter.CTk()
