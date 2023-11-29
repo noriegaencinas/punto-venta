@@ -130,10 +130,10 @@ class HomePage(Ventana):
         label_caja_registradora = customtkinter.CTkLabel(master=opciones_frame, text="Caja Registradora", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
         label_caja_registradora.grid(row=0, column=3)
 
-        label_configuracion = customtkinter.CTkLabel(master=opciones_frame, text="Configuración", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_configuracion = customtkinter.CTkLabel(master=opciones_frame, text="Configuración", width=300, height=16, font=("Arial", 10))
         label_configuracion.grid(row=0, column=4)
 
-        label_opciones_sistema = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de Sistema", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_opciones_sistema = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de Sistema", width=300, height=16, font=("Arial", 10), anchor='w')
         label_opciones_sistema.grid(row=0, column=5)
 
         # Cargar imagen
