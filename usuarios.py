@@ -16,11 +16,11 @@ class Usuarios(tk.Tk):
             self.geometry(f"+{previous_position[0]}+{previous_position[1]}")
 
         self.my_conn = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='',
+            host='sql3.freesqldatabase.com',
+            user='sql3665921',
+            password='AJXgrEaPv5',
             port='3306',
-            database='distribuidor')
+            database='sql3665921')
         self.configure(bg="black")
         self.display()
 
@@ -31,13 +31,12 @@ class Usuarios(tk.Tk):
         i = 0
 
         # Nombres de las columnas
-        labels = ['UsuarioID', 'Nombre', 'Apellido', 'NombreUsuario', 'Contraseña']
+        labels = ['UsuarioID', 'Nombre', 'Apellido', 'NombreUsuario', 'Contraseña', 'Puesto']
         for j, label_text in enumerate(labels):
             label = CTkLabel(self, width=15, text=label_text, anchor="w", fg_color="black", font=("Arial", 10, "bold"))
             label.grid(row=i, column=j, padx=10)
 
         i += 1
-
 
         for empleado in my_cursor:
             # Columna UsuarioID
@@ -60,13 +59,17 @@ class Usuarios(tk.Tk):
             e_contrasena = CTkLabel(self, width=15, text=str(empleado[4]), anchor="w", fg_color="black")
             e_contrasena.grid(row=i, column=4, padx=10)
 
+            # Columna Contraseña
+            e_puesto = CTkLabel(self, width=15, text=str(empleado[5]), anchor="w", fg_color="black")
+            e_puesto.grid(row=i, column=5, padx=10)
+
             # Botón Editar
             e_editar = CTkButton(self, width=5, text='Editar', anchor="w", command=lambda k=empleado[0]: self.edit_data(k))
-            e_editar.grid(row=i, column=5, padx=10)
+            e_editar.grid(row=i, column=6, padx=10)
 
             # Botón Eliminar
             e_eliminar = CTkButton(self, width=5, text='Eliminar', anchor="w", command=lambda k=empleado[0]: self.delete_data(k))
-            e_eliminar.grid(row=i, column=6, padx=10)
+            e_eliminar.grid(row=i, column=7, padx=10)
 
             i += 1
 
@@ -81,12 +84,14 @@ class Usuarios(tk.Tk):
         self.e3_str_Apellido = tk.StringVar(self)
         self.e4_str_NombreUsuario = tk.StringVar(self)
         self.e5_str_Contrasena = tk.StringVar(self)
+        self.e6_str_Puesto = tk.StringVar(self)
 
         self.e1_int_UsuarioID.set(s[0])
         self.e2_str_Nombre.set(s[1])
         self.e3_str_Apellido.set(s[2])
         self.e4_str_NombreUsuario.set(s[3])
         self.e5_str_Contrasena.set(s[4])
+        self.e6_str_Puesto.set(s[5])
 
         # Columna UsuarioID
         e1 = tk.Entry(self, textvariable=self.e1_int_UsuarioID, width=10, state='disabled')
@@ -108,9 +113,13 @@ class Usuarios(tk.Tk):
         e5 = tk.Entry(self, textvariable=self.e5_str_Contrasena, width=15)
         e5.grid(row=i, column=4, padx=10)
 
+        # Columna Puesto
+        e6 = tk.Entry(self, textvariable=self.e6_str_Puesto, width=15)
+        e6.grid(row=i, column=5, padx=10)
+
         # Botón Actualizar
         b2 = CTkButton(self, text='Actualizar', command=lambda: self.my_update(), anchor="w", width=5)
-        b2.grid(row=i, column=5, padx=10)
+        b2.grid(row=i, column=6, padx=10)
 
     def delete_data(self, id):
         if messagebox.askyesno("Eliminar Usuario", "¿Estás seguro de que deseas eliminar este usuario?"):
@@ -129,16 +138,18 @@ class Usuarios(tk.Tk):
         # Crea una nueva instancia de la clase Usuarios con la posición anterior
         app = Usuarios(previous_position)
         app.mainloop()
+
     def my_update(self):
         data = (
             self.e2_str_Nombre.get(), self.e3_str_Apellido.get(), self.e4_str_NombreUsuario.get(),
-            self.e5_str_Contrasena.get(),
-            self.e1_int_UsuarioID.get())
+            self.e5_str_Contrasena.get(), self.e6_str_Puesto.get(), self.e1_int_UsuarioID.get())
         id = self.my_conn.cursor()
         id.execute(
-            "UPDATE Empleados SET Nombre=%s, Apellido=%s, NombreUsuario=%s, Contraseña=%s WHERE UsuarioID=%s", data)
+            "UPDATE Empleados SET Nombre=%s, Apellido=%s, NombreUsuario=%s, Contraseña=%s, Puesto=%s WHERE UsuarioID=%s",
+            data)
         print("Row updated = ", id.rowcount)
         self.my_conn.commit()
+        id.close()  # Close the cursor
         for w in self.grid_slaves(i):
             w.grid_forget()
         self.display()
