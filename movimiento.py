@@ -5,7 +5,6 @@ from ventana_general import *
 import customtkinter
 
 OPCIONES_FRAME_HEIGHT = 10
-
 MENU_IMAGE_WIDTH = 50
 MENU_IMAGE_HEIGHT = 50
 MENU_BUTTON_WIDTH = 150
