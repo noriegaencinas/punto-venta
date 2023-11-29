@@ -67,19 +67,24 @@ class Venta(SubVentana):
         boton_buscar.grid(column=0, row=0)'''
 
         def boton_barras():
-            pass
+            a=[]
+            codigo = entry_codigo.get()
+            codigo = int(codigo)
+            my_cursor = self.my_conn.cursor()
+            my_cursor.execute(f"SELECT ProductoID, Nombre, Precio FROM productos WHERE ProductoID={codigo}")
+            for producto in my_cursor:
+                for j in range(len(producto)):
+                    print(producto[j])
+                    a.append(producto[j])
+            tkinter.messagebox.showinfo(title="Success!", message=f"[Producto: {a[1]}] [Precio: {a[2]}]")
+            entry_codigo.delete(0, last_index=None)
+
+
         image_barras = customtkinter.CTkImage(light_image=Image.open("images/codigo-de-barras.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_barras = customtkinter.CTkButton(master=menu_frame, text="Verificador de precios", image=image_barras, compound="top", command=boton_barras, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_barras.grid(column=1, row=0)
-
-        def boton_eliminar():
-            pass
-        image_eliminar = customtkinter.CTkImage(light_image=Image.open("images/eliminar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_eliminar = customtkinter.CTkButton(master=menu_frame, text="Eliminar articulo", image=image_eliminar, compound="top", command=boton_eliminar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_eliminar.grid(column=2, row=0)
-
         def boton_cancelar():
-            pass
+            self.new_window.destroy()
         image_cancelar = customtkinter.CTkImage(light_image=Image.open("images/cancelado.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_cancelar = customtkinter.CTkButton(master=menu_frame, text="Cancelar venta", image=image_cancelar, compound="top", command=boton_cancelar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_cancelar.grid(column=3, row=0)
