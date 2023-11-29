@@ -1,160 +1,140 @@
-from tkinter import *
-from tkinter import messagebox
+import mysql
 import mysql.connector
+from PIL import Image
+from ventana_general import *
+import customtkinter
 
+OPCIONES_FRAME_HEIGHT = 10
+MENU_IMAGE_WIDTH = 50
+MENU_IMAGE_HEIGHT = 50
+MENU_BUTTON_WIDTH = 150
+MENU_BUTTON_HEIGHT = 80
 
-class Inventario:
-    def __init__(self):
-        # Conexión a la base de datos
-        my_connect = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="",
-            database="distribuidort"
-        )
+BLUE = "#0766AD" #Para lo del telcel
+LESS_BLUE = "#29ADB2"
+LIGHT_GREEN = "#C5E898"
+GRAY = "#F3F3F3"
+GRAY2 = "#D0D4CA"
+LIGHT_BLUE = "#E0F4FF"
+LIGHT_BLUE2 = "#87C4FF"
+LIT_BLUE = "#E0F4FF"
+class Inventario(SubVentana):
+    def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
+        super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
+        self.my_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            port='3306',
+            database='distribuidor')
+        # Dimensiones de la ventana
+        win_width = int(ventana_dimension.split("x")[0])
+        win_height = int(ventana_dimension.split("x")[1])
 
-        # Declaración del conector para ejecutar las querys
-        conexion = my_connect.cursor()
+        menu_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=MENU_BUTTON_HEIGHT, fg_color=LIGHT_BLUE2, corner_radius=0)
+        menu_frame.pack(fill="both", expand=False)
 
-        # Creación de la ventana
-        root = Tk()
-        root.title('Artículos')
-        window_width = 500
-        window_height = 600
-        # Obtiene la dimensión de la pantalla
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        # Obtiene el centro de la pantalla
-        center_x = int(screen_width / 2 - window_width / 2)
-        center_y = int(screen_height / 2 - window_height / 2)
-        # Pone la posición de la ventana en el centro de la pantalla
-        root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=16, fg_color=BLUE, corner_radius=0)
+        opciones_frame.pack(fill="both", expand=False)
 
-        # Etiqueta para mostrar el aviso
-        aviso_label = Label(root, text="", fg="red")
-        aviso_label.place(x=130, y=180)
+        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
+        label_opciones.grid(row=0, column=0)
 
-        def obtener_descripcion():
-            # Obtener el código ingresado
-            codigo_ingresado_str = ingresar_codigo.get()
+        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
+        label_pantalla.grid(row=0, column=1)
 
-            # Verificar si la cadena no está vacía
-            if codigo_ingresado_str:
-                try:
-                    # Intentar convertir la cadena a un entero
-                    codigo_ingresado = int(codigo_ingresado_str)
+        def boton_editar():
+            pass
+        image_editar = customtkinter.CTkImage(dark_image=Image.open("images/editar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_editar = customtkinter.CTkButton(master=menu_frame, text="Editar", image=image_editar, compound="top", command=boton_editar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_editar.grid(column=2, row=0)
+        def boton_salir():
+            self.new_window.destroy()
+        image_salir = customtkinter.CTkImage(dark_image=Image.open("images/salir_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_salir = customtkinter.CTkButton(master=menu_frame, text="Salir", image=image_salir, compound="top", command=boton_salir)
+        boton_salir.grid(column=4, row=0)
 
-                    # Realizar la consulta SQL
-                    obtener_descripcion_query = "SELECT Descripcion FROM productos WHERE ProductoID = %s"
-                    conexion.execute(obtener_descripcion_query, (codigo_ingresado,))
+        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, fg_color=LIGHT_BLUE, corner_radius=0)
+        opciones_frame.pack(fill="both", expand=True)
 
-                    # Obtener los resultados
-                    resultados = conexion.fetchall()
+        entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        entries_main_frame.place(x=0, y=0)
 
-                    # Limpiar el contenido actual del widget Text
-                    resultado_text.delete(1.0, "end")
+        entries_frame = customtkinter.CTkFrame(master=entries_main_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        entries_frame.pack(padx=20, pady=20)
 
-                    # Mostrar los resultados en el widget Text
-                    if resultados:
-                        for resultado in resultados:
-                            resultado_text.insert("end", str(resultado) + "\n")
-                        # Limpiar el aviso si hay resultados
-                        aviso_label.config(text="")
-                    else:
-                        # Mostrar el aviso si no hay resultados
-                        aviso_label.config(text="Producto no encontrado, el código no existe", fg="red")
+        image_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        image_frame.place(x=(win_width // 2), y=0)
 
-                except ValueError:
-                    # Manejar el caso en que la conversión a entero falla
-                    resultado_text.delete(1.0, "end")
-                    resultado_text.insert("end", "Error: Ingresa un valor numérico válido\n")
-                    # Limpiar el aviso en caso de error de conversión
-                    aviso_label.config(text="")
+        label_tipo = customtkinter.CTkLabel(master=entries_frame,
+                                       text="Tipo de movimiento",
+                                       width=120,
+                                       height=25,
+                                       corner_radius=8)
+        label_tipo.grid(column=0, row=0)
 
-        #Codigo para escaneo del producto
-        informacion = Label(root, text='Información del producto').place(x=30, y=60)
-        codigo = Label(root, text='Ingrese el código').place(x=30, y=110)
-        ingresar_codigo = Entry(root, width=25)
-        ingresar_codigo.place(x=130, y=110)
+        label_nombre = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
+        # label_nombre.pack(pady=5, padx=10, expand=False)
+        label_nombre.grid(column=0, row=1)
 
-        # Crear el botón que ejecutará la consulta
-        boton_consulta = Button(root, text="Obtener Descripción", command=obtener_descripcion)
-        boton_consulta.place(x=130, y=150)
+        entry_nombre = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
+        # entry_nombre.pack(pady=5, padx=10)
+        entry_nombre.grid(column=1, row=1)
 
-        # Crear el widget Text para mostrar los resultados
-        resultado_text = Text(root, height=4, width=40)
-        resultado_text.place(x=130, y=200)
+        def optionmenu_callback(choice):
+            pass
 
-        # Etiqueta y Menú desplegable para Tipo de Movimiento
-        tipo_movimiento_label = Label(root, text='Tipo Movimiento').place(x=300, y=320)
-        opciones_tipo_movimiento = ['Entrada', 'Salida']
-        seleccion_tipo_movimiento = StringVar()
-        seleccion_tipo_movimiento.set(opciones_tipo_movimiento[0])  # Establecer el valor predeterminado
-        tipo_movimiento_menu = OptionMenu(root, seleccion_tipo_movimiento, *opciones_tipo_movimiento)
-        tipo_movimiento_menu.place(x=300, y=355)
+        optionmenu_var = customtkinter.StringVar(value="Retiro")
+        optionmenu = customtkinter.CTkOptionMenu(master=entries_frame ,values=["Retiro", "Ingreso"],
+                                                 command=optionmenu_callback,
+                                                 width=200,
+                                                 variable=optionmenu_var)
+        optionmenu.grid(column=1, row=0)
 
-        # Etiqueta y Entrada para Cantidad
-        actualiarInventario_label = Label(root, text='Actualizar Stock').place(x=30, y=320)
-        cantidad_label = Label(root, text='Cantidad').place(x=30, y=360)
-        cantidad_entry = Entry(root, width=25)
-        cantidad_entry.place(x=130, y=360)
+        def boton_guardar():
+            motivo = entry_motivo.get()
+            cantidad = entry_cantidad.get()
+            cantidad=int(cantidad)
+            tipo = optionmenu_var.get()
+            # print(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            my_cursor = self.my_conn.cursor()
+            my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            # my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES ('{tipo}','{motivo}','{cantidad}', NOW())")
+            self.my_conn.commit()
 
-        # Etiqueta para mostrar la Cantidad del Inventario
-        cantidad_stock_label = Label(root, text='Cantidad Stock:')
-        cantidad_stock_label.place(x=130, y=390)
+        image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"),
+                                               size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top",
+                                                command=boton_guardar)
+        boton_guardar.grid(column=1, row=0)
 
-        def actualizar_inventario():
-            # Obtener el ProductoID ingresado
-            producto_id_str = ingresar_codigo.get()
+        label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
+        # label_nombre.pack(pady=5, padx=10, expand=False)
+        label_cantidad.grid(column=0, row=1, pady=10)
 
-            # Verificar si la cadena no está vacía
-            if producto_id_str:
-                try:
-                    # Obtener la cantidad ingresada
-                    cantidad_str = cantidad_entry.get()
-                    cantidad = int(cantidad_str)
+        entry_cantidad = customtkinter.CTkEntry(master=entries_frame, placeholder_text="0.00$", width=200)
+        # entry_nombre.pack(pady=5, padx=10)
+        entry_cantidad.grid(column=1, row=1, pady=10)
 
-                    # Obtener el tipo de movimiento seleccionado
-                    tipo_movimiento = seleccion_tipo_movimiento.get()
+        label_motivo = customtkinter.CTkLabel(master=entries_frame, text="Motivo", text_color="BLACK")
+        # label_nombre.pack(pady=5, padx=10, expand=False)
+        label_motivo.grid(column=0, row=2)
 
-                    # Realizar la actualización del inventario
-                    if tipo_movimiento == 'Entrada':
-                        # Incrementar la cantidad en la base de datos
-                        actualizar_inventario_query = "UPDATE productos SET CantidadInventario = CantidadInventario + %s WHERE ProductoID = %s"
-                        conexion.execute(actualizar_inventario_query, (cantidad, producto_id_str))
-                    elif tipo_movimiento == 'Salida':
-                        # Decrementar la cantidad en la base de datos
-                        actualizar_inventario_query = "UPDATE productos SET CantidadInventario = CantidadInventario - %s WHERE ProductoID = %s"
-                        conexion.execute(actualizar_inventario_query, (cantidad, producto_id_str))
+        entry_motivo = customtkinter.CTkEntry(master=entries_frame, placeholder_text="Escriba aqui su motivo...", width=200)
+        # entry_nombre.pack(pady=5, padx=10)
+        entry_motivo.grid(column=1, row=2)
 
-                    # Realizar commit para aplicar los cambios en la base de datos
-                    my_connect.commit()
+        # Cargar imagen
+        logo_image_path = "images/logo_distribuidora.png"
+        logo_image = customtkinter.CTkImage(light_image=Image.open(logo_image_path), size=(250, 250))
+        # Usar imagen label
+        logo_image_label = customtkinter.CTkLabel(master=image_frame, image=logo_image, text="")
+        logo_image_label.pack(pady=30, padx=10)
 
-                    # Actualizar el widget Text con la descripción
-                    obtener_descripcion()
-
-                    # Obtener la cantidad actualizada del inventario
-                    obtener_cantidad_query = "SELECT CantidadInventario FROM productos WHERE ProductoID = %s"
-                    conexion.execute(obtener_cantidad_query, (producto_id_str,))
-                    cantidad_actualizada = conexion.fetchone()[0]
-
-                    # Actualizar la etiqueta de Cantidad Stock
-                    cantidad_stock_label.config(text=f'Cantidad Stock: {cantidad_actualizada}')
-
-                    # Mostrar mensaje de éxito
-                    messagebox.showinfo("Éxito", "Movimiento completado con éxito.")
-
-                except ValueError:
-                    resultado_text.delete(1.0, "end")
-                    resultado_text.insert("end", "Error: Ingresa un valor numérico válido\n")
-
-        # Botón para actualizar el inventario
-        boton_actualizar = Button(root, text="Actualizar Inventario", command=actualizar_inventario)
-        boton_actualizar.place(x=300, y=400)
-
-        # Mantiene corriendo la ventana
-        root.mainloop()
-
-
+# Para testear el codigo
 if __name__ == '__main__':
-    inventario = Inventario()
+    test = Ventana("300x300", "titulo")
+
+    test1 = Inventario(test.window, "720x480", "top")
+
+    test.window.mainloop()

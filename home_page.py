@@ -94,7 +94,7 @@ class HomePage(Ventana):
         boton_mov_dia.grid(column=7, row=0)
 
         def boton_empresa():
-            test_empresa = empresa.Empresa(self.window, ventana_dimension="720x520", titulo_ventana="Empresa")
+            test_empresa = empresa.Empresa(self.window, ventana_dimension="720x520", titulo_ventana="Empresa", permisos=permisos)
         image_empresa = customtkinter.CTkImage(dark_image=Image.open("images/empresa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_empresa = customtkinter.CTkButton(master=menu_frame, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
         boton_empresa.grid(column=8, row=0)
@@ -154,4 +154,4 @@ class HomePage(Ventana):
 
 # Para testear el codigo
 if __name__ == '__main__':
-    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos="Admin")
+    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos="emplead")

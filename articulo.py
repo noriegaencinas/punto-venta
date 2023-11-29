@@ -1,10 +1,10 @@
-import json
-from tkinter import messagebox
-
-from PIL import Image
-from ventana_general import *
+import tkinter as tk
+from tkinter import ttk
+import mysql.connector
 import customtkinter
+from PIL import Image
 
+from ventana_general import *
 OPCIONES_FRAME_HEIGHT = 10
 
 MENU_IMAGE_WIDTH = 50
@@ -20,12 +20,17 @@ GRAY2 = "#D0D4CA"
 LIGHT_BLUE = "#E0F4FF"
 LIGHT_BLUE2 = "#87C4FF"
 LIT_BLUE = "#E0F4FF"
-
-class Empresa(SubVentana):
+class Articulo(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
+        self.new_window.config(bg=LIT_BLUE)
+        self.my_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            port='3306',
+            database='distribuidor')
 
-        # Dimensiones de la ventana
         win_width = int(ventana_dimension.split("x")[0])
         win_height = int(ventana_dimension.split("x")[1])
 
@@ -38,33 +43,75 @@ class Empresa(SubVentana):
         label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
         label_opciones.grid(row=0, column=0)
 
-        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
-        label_pantalla.grid(row=0, column=1)
+        label_datos = customtkinter.CTkLabel(master=opciones_frame, text="Modificaciones de datos", width=MENU_BUTTON_WIDTH*4, height=16, font=("Arial", 10))
+        label_datos.grid(row=0, column=1)
 
-        #filas_names = ["Nombre", "Eslogan", "Representante", "RFC", "Dirección", "Colonia", "Ciudad", "Estado", "Código Postal", "Teléfono", "Email"]
-        def boton_guardar():
+        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
+        label_pantalla.grid(row=0, column=2)
+
+        def boton_actualizar():
             pass
-        image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top", command=boton_guardar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_guardar.grid(column=0, row=0)
+        image_actualizar = customtkinter.CTkImage(light_image=Image.open("images/actualizar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_actualizar = customtkinter.CTkButton(master=menu_frame, text="Actualizar", image=image_actualizar, compound="top", command=boton_actualizar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_actualizar.grid(column=0, row=0)
+
+        def boton_buscar():
+            pass
+        image_buscar = customtkinter.CTkImage(light_image=Image.open("images/lupa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_buscar = customtkinter.CTkButton(master=menu_frame, text="Buscar", image=image_buscar, compound="top", command=boton_buscar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_buscar.grid(column=1, row=0)
+
+        def boton_nuevo():
+            pass
+        image_nuevo = customtkinter.CTkImage(light_image=Image.open("images/agregar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_nuevo = customtkinter.CTkButton(master=menu_frame, text="Nuevo", image=image_nuevo, compound="top", command=boton_nuevo, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_nuevo.grid(column=2, row=0)
+
+        def boton_modificar():
+            pass
+        image_modificar = customtkinter.CTkImage(light_image=Image.open("images/modificar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_modificar = customtkinter.CTkButton(master=menu_frame, text="Modificar", image=image_modificar, compound="top", command=boton_modificar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_modificar.grid(column=3, row=0)
+
+        def boton_eliminar():
+            pass
+        image_eliminar = customtkinter.CTkImage(light_image=Image.open("images/eliminar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_eliminar = customtkinter.CTkButton(master=menu_frame, text="Eliminar", image=image_eliminar, compound="top", command=boton_eliminar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_eliminar.grid(column=4, row=0)
 
         def boton_salir():
             self.new_window.destroy()
-        image_salir = customtkinter.CTkImage(dark_image=Image.open("images/salir_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        image_salir = customtkinter.CTkImage(light_image=Image.open("images/salir_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_salir = customtkinter.CTkButton(master=menu_frame, text="Salir", image=image_salir, compound="top", command=boton_salir)
-        boton_salir.grid(column=1, row=0)
+        boton_salir.grid(column=5, row=0)
 
-        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, fg_color=LIGHT_BLUE, corner_radius=0)
-        opciones_frame.pack(fill="both", expand=True)
+        main_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        main_frame.pack()
 
-        entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
-        entries_main_frame.place(x=0, y=0)
+        table_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        table_frame.pack(padx=20, pady=20, fill='both', expand=True)
+
+        my_cursor = self.my_conn.cursor()
+        my_cursor.execute("SELECT ProductoID, Nombre, Descripcion, Precio  FROM productos")
+        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target", bg_color=LESS_BLUE)
+        label_tipo.grid(row=0, column=0)
+        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target", bg_color=LESS_BLUE)
+        label_motivo.grid(row=0, column=1)
+        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=150, text="Cantidad", cursor="target", bg_color=LESS_BLUE)
+        label_cantidad.grid(row=0, column=2)
+        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Fecha", cursor="target", bg_color=LESS_BLUE)
+        label_fecha.grid(row=0, column=3)
+        global i
+        i = 1
+        for producto in my_cursor:
+            for j in range(len(producto)):
+                # Cambia el color del texto al crear la etiqueta
+                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIGHT_BLUE2)
+                e.grid(row=i, column=j)
+            i = i + 1
 
 
-# Para testear el codigo
 if __name__ == '__main__':
-    test = Ventana("300x400", "titulo")
-
-    test1 = Empresa(test.window, "720x520", "top")
-
+    test = Ventana("300x300", "titulo")
+    test1 = Articulo(test.window, "880x480", "top")
     test.window.mainloop()
