@@ -38,6 +38,7 @@ class Usuarios(tk.Tk):
 
         i += 1
 
+
         for empleado in my_cursor:
             # Columna UsuarioID
             e_id = CTkLabel(self, width=10, text=str(empleado[0]), anchor="w", fg_color="black")
