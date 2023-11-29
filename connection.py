@@ -1,15 +1,21 @@
 import mysql.connector
 
-mydb = mysql.connector.connect( # Parametros que necesitamos para la conexion a la base de datos
-    host='localhost',
-    user='root',
-    password='',
-    port='3306',
-    database='distribuidor'
-)
+connection = mysql.connector.connect(host='sql3.freesqldatabase.com',
+                                         database='sql3665921',
+                                         user="sql3665921",
+                                         password="AJXgrEaPv5",
+                                         port="3306")
+if connection.is_connected():
+        # CONEXION BASE DE DATOS
+        db_Info = connection.get_server_info()
+        print("Connected to MySQL Server version ", db_Info)
+        cursor = connection.cursor()
+        cursor.execute("select database();")
+        record = cursor.fetchone()
+        print("You're connected to database: ", record)
 
 def ejecutar_instruccion(statement):
-    mycursor = mydb.cursor() # Es el objeto para ejecutar las statements y comunicarse con mysql
+    mycursor = connection.cursor() # Es el objeto para ejecutar las statements y comunicarse con mysql
 
     #print(statement)
     mycursor.execute(statement) # Instruccion a realizar
@@ -21,4 +27,3 @@ def ejecutar_instruccion(statement):
         print(i)
 
     return len(resultado) > 0
-

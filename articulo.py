@@ -60,35 +60,6 @@ class Empresa(SubVentana):
         entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         entries_main_frame.place(x=0, y=0)
 
-        entries_frame = customtkinter.CTkFrame(master=entries_main_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
-        entries_frame.pack(padx=20, pady=10)
-
-        image_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
-        image_frame.place(x=(win_width // 2), y=0)
-
-        filas_names = ["Nombre", "Eslogan", "Representante", "RFC", "Dirección", "Colonia", "Ciudad", "Estado", "Código Postal", "Teléfono", "Email"]
-        label_obj = {}
-        text_obj = {}
-
-        with open(file="data_empresa.json", mode="r") as file:
-            my_data = json.load(file)
-            for i in range(0, len(filas_names)):
-                new_label = customtkinter.CTkLabel(master=entries_frame, text=filas_names[i], text_color="BLACK", height=12)
-                new_label.grid(column=0, row=i, pady=2)
-
-                new_text = customtkinter.CTkTextbox(master=entries_frame, width=200, height=12)
-                new_text.insert("0.0", my_data["empresa info"][filas_names[i]])
-                new_text.grid(column=1, row=i, pady=2)
-
-                label_obj[filas_names[i]] = new_label
-                text_obj[filas_names[i]] = new_text
-
-        # Cargar imagen
-        logo_image_path = "images/logo_distribuidora.png"
-        logo_image = customtkinter.CTkImage(light_image=Image.open(logo_image_path), size=(250, 250))
-        # Usar imagen label
-        logo_image_label = customtkinter.CTkLabel(master=image_frame, image=logo_image, text="")
-        logo_image_label.pack(pady=30, padx=10)
 
 # Para testear el codigo
 if __name__ == '__main__':

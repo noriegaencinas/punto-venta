@@ -5,6 +5,7 @@ import customtkinter
 
 import acerca_de
 import articulo
+import lista_inventario
 import usuarios
 from inventario import Inventario
 from ventana_general import *
@@ -67,10 +68,10 @@ class HomePage(Ventana):
         boton_inventario = customtkinter.CTkButton(master=self.window, text="Inventarios", image=image_inventario, compound="top", command=boton_inventario, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_inventario.grid(column=4, row=0)
 
-        def boton_inventario():
-            pass
+        def boton_lista_inventario():
+            test_lista_inventario = lista_inventario.ListaInventario(self.window, "1000x480", "top")
         image_lista_inventario = customtkinter.CTkImage(dark_image=Image.open("images/inventario_lista.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_lista_inventario = customtkinter.CTkButton(master=self.window, text="Lista Inventarios", image=image_lista_inventario, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_lista_inventario = customtkinter.CTkButton(master=self.window, text="Lista Inventarios", image=image_lista_inventario, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_lista_inventario)
         boton_lista_inventario.grid(column=5, row=0)
 
         def boton_entrada_salida_dinero():
