@@ -5,8 +5,9 @@ from tkinter import ttk, messagebox
 import mysql.connector
 import customtkinter
 from PIL import Image
-
 from ventana_general import *
+import escaner
+
 OPCIONES_FRAME_HEIGHT = 10
 
 MENU_IMAGE_WIDTH = 50
@@ -42,32 +43,8 @@ class Venta(SubVentana):
         menu_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=MENU_BUTTON_HEIGHT,fg_color=LIGHT_BLUE2, corner_radius=0)
         menu_frame.pack(fill="both", expand=False)
 
-        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=16, fg_color=BLUE,corner_radius=0)
-        opciones_frame.pack(fill="both", expand=False)
-
-        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH,height=16, font=("Arial", 10))
-        label_opciones.grid(row=0, column=0)
-
-        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH,height=16, font=("Arial", 10))
-        label_pantalla.grid(row=0, column=1)
-
-        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
-        label_opciones.grid(row=0, column=0)
-
-        label_datos = customtkinter.CTkLabel(master=opciones_frame, text="Modificaciones de datos", width=MENU_BUTTON_WIDTH*4, height=16, font=("Arial", 10))
-        label_datos.grid(row=0, column=1)
-
-        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
-        label_pantalla.grid(row=0, column=2)
-
-        '''def boton_buscar():
-            pass
-        image_buscar = customtkinter.CTkImage(light_image=Image.open("images/lupa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_buscar = customtkinter.CTkButton(master=menu_frame, text="Buscar Articulo", image=image_buscar, compound="top", command=boton_buscar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_buscar.grid(column=0, row=0)'''
-
         def boton_barras():
-            a=[]
+            '''a=[]
             codigo = entry_codigo.get()
             codigo = int(codigo)
             my_cursor = self.my_conn.cursor()
@@ -77,9 +54,10 @@ class Venta(SubVentana):
                     print(producto[j])
                     a.append(producto[j])
             tkinter.messagebox.showinfo(title="Success!", message=f"[Producto: {a[1]}] [Precio: {a[2]}]")
-            entry_codigo.delete(0, last_index=None)
-
-
+            entry_codigo.delete(0, last_index=None)'''
+            scan = escaner.Escaner()
+            res = scan.escanear()
+            entry_codigo.insert(0, res)
         image_barras = customtkinter.CTkImage(light_image=Image.open("images/codigo-de-barras.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_barras = customtkinter.CTkButton(master=menu_frame, text="Verificador de precios", image=image_barras, compound="top", command=boton_barras, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_barras.grid(column=1, row=0)
@@ -101,39 +79,44 @@ class Venta(SubVentana):
         boton_salir = customtkinter.CTkButton(master=menu_frame, text="Salir", image=image_salir, compound="top", command=boton_salir)
         boton_salir.grid(column=5, row=0)
 
+        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=16, fg_color=BLUE,corner_radius=0)
+        opciones_frame.pack(fill="both", expand=False)
+
+        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH * 4,height=16, font=("Arial", 10))
+        label_opciones.grid(row=0, column=0)
+
+        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH,height=16, font=("Arial", 10))
+        label_pantalla.grid(row=0, column=1)
+
         main_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         main_frame.pack()
 
-        table_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        entries_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height,fg_color=LIT_BLUE, corner_radius=0)
+        entries_frame.pack(padx=20, pady=10, fill='both', expand=True)
 
-        opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, fg_color=LIGHT_BLUE,corner_radius=0)
-        opciones_frame.pack(fill="both", expand=True)
+        entry_codigo = customtkinter.CTkEntry(master=entries_frame, placeholder_text="Ingrese el codigo de barras", width=300)
+        entry_codigo.grid(row=0, column=0)
 
-        entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height,fg_color=LIT_BLUE, corner_radius=0)
-        entries_main_frame.place(x=0, y=0)
+        left_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
+        left_frame.pack(padx=20, pady=10, fill='both', expand=True)
 
-        entries_frame = customtkinter.CTkFrame(master=entries_main_frame, width=(win_width // 2), height=win_height,fg_color=LIT_BLUE, corner_radius=0)
-        entries_frame.pack(padx=20, pady=10)
-
-        image_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height,fg_color=LIT_BLUE, corner_radius=0)
-        image_frame.place(x=(win_width // 2), y=0)
-        table_frame.pack(padx=20, pady=20, fill='both', expand=True)
-
-        entry_codigo = customtkinter.CTkEntry(master=table_frame, placeholder_text="Ingrese el codigo de barras", width=150)
-        entry_codigo.grid( row=0, column=0)
-        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="ID de Producto", cursor="target", bg_color=LESS_BLUE)
+        label_tipo = customtkinter.CTkLabel(master=left_frame, width=150, text="ID de Producto", cursor="target", bg_color=LESS_BLUE)
         label_tipo.grid(row=1, column=0)
-        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Producto", cursor="target", bg_color=LESS_BLUE)
+        label_motivo = customtkinter.CTkLabel(master=left_frame, width=150, text="Producto", cursor="target", bg_color=LESS_BLUE)
         label_motivo.grid(row=1, column=1)
-        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=150, text="Precio", cursor="target", bg_color=LESS_BLUE)
+        label_cantidad = customtkinter.CTkLabel(master=left_frame, width=150, text="Precio", cursor="target", bg_color=LESS_BLUE)
         label_cantidad.grid(row=1, column=2)
-        label_subtotal = customtkinter.CTkLabel(master=table_frame, width=150, text="Subtotal", cursor="target",
-                                            bg_color=LESS_BLUE)
+        label_subtotal = customtkinter.CTkLabel(master=left_frame, width=150, text="Subtotal", cursor="target", bg_color=LESS_BLUE)
         label_subtotal.grid(row=1, column=4)
-        label_relleno = customtkinter.CTkLabel(master=table_frame, width=20, text="",cursor="target")
+        label_relleno = customtkinter.CTkLabel(master=left_frame, width=20, text="", cursor="target")
         label_relleno.grid(row=1, column=3)
-        label_subtotalnum = customtkinter.CTkLabel(master=table_frame, text="0.00",width=150, bg_color=GRAY)
+
+        label_subtotalnum = customtkinter.CTkLabel(master=left_frame, text="0.00", width=150, bg_color=GRAY)
         label_subtotalnum.grid(row=1, column=5)
+
+        right_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color="red", corner_radius=0)
+        right_frame.pack(padx=20, pady=20, fill='both', expand=True)
+
         def boton_buscar():
             try:
                 codigo=entry_codigo.get()
@@ -146,7 +129,7 @@ class Venta(SubVentana):
                     #print(producto)
                     for j in range(len(producto)):
                         # Cambia el color del texto al crear la etiqueta
-                        e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target",
+                        e = customtkinter.CTkLabel(master=left_frame, width=150, text=str(producto[j]), cursor="target",
                                                    bg_color=LIGHT_BLUE2)
                         if j==2:
                             precio=producto[j]
@@ -159,6 +142,10 @@ class Venta(SubVentana):
                 entry_codigo.delete(0, last_index=None)
             except:
                 messagebox.showerror(title="Error", message="El articulo no se encontro")
+
+        image_buscar = customtkinter.CTkImage(light_image=Image.open("images/lupa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_buscar = customtkinter.CTkButton(master=menu_frame, text="Buscar Articulo", image=image_buscar, compound="top", command=boton_buscar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        boton_buscar.grid(column=0, row=0)
         def boton_imprimir():
             try:
                 my_cursor = self.my_conn.cursor()
@@ -177,15 +164,6 @@ class Venta(SubVentana):
         image_imprimir = customtkinter.CTkImage(light_image=Image.open("images/impresora.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_imprimir = customtkinter.CTkButton(master=menu_frame, text="Confirmar venta", image=image_imprimir, compound="top", command=boton_imprimir, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_imprimir.grid(column=4, row=0)
-
-
-        image_buscar = customtkinter.CTkImage(light_image=Image.open("images/lupa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_buscar = customtkinter.CTkButton(master=menu_frame, text="Buscar Articulo", image=image_buscar, compound="top", command=boton_buscar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_buscar.grid(column=0, row=0)
-
-
-
-
 
 if __name__ == '__main__':
     test = Ventana("300x300", "titulo")
