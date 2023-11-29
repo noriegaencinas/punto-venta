@@ -3,7 +3,6 @@ import mysql.connector
 from PIL import Image
 from ventana_general import *
 import customtkinter
-import tkinter
 
 OPCIONES_FRAME_HEIGHT = 10
 
