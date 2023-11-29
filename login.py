@@ -22,12 +22,12 @@ class Login(Ventana):
             values = (usuario, password)
             autorizacion = cone.ejecutar_instruccion(statement=SQL_statement_raw, parametros=values)
             if not len(autorizacion) > 0: # Si no existe un registro con este usuario o password
-                messagebox.showerror(title="Error", message="Usuario o contraseña incorrectos. \n Vuelve a intentarlo!")
+                messagebox.showerror(title="Error", message="Usuario o contraseña incorrectos. \nVuelve a intentarlo!")
                 entry_username.delete(0, 'end')
                 entry_password.delete(0, 'end')
             else:
-                self.validacion = True
                 self.window.destroy()
+                self.validacion = True
 
         self.frame = customtkinter.CTkFrame(master=self.window)
         self.frame.pack(pady=10,padx=10, fill="both", expand=True)

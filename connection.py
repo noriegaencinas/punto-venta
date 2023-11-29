@@ -9,9 +9,7 @@ class Connection:
     def ejecutar_instruccion(self, statement, parametros=()):
         try:
             if len(parametros) > 0:
-                print("#")
                 self.cursor.execute(statement, parametros)
-                print("#")
             else:
                 self.cursor.execute(statement)
             resultados = self.cursor.fetchall()
