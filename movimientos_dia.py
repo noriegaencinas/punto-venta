@@ -92,7 +92,7 @@ class MovimientosDia(SubVentana):
         table_frame.pack(padx=20, pady=20, fill='both', expand=True)
 
         my_cursor = self.my_conn.cursor()
-        my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos WHERE Fecha='2023-11-28'")
+        my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos")
         label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target", bg_color=LESS_BLUE)
         label_tipo.grid(row=0, column=0)
         label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target", bg_color=LESS_BLUE)
