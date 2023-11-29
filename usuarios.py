@@ -36,6 +36,7 @@ class Usuarios(tk.Tk):
             label = CTkLabel(self, width=15, text=label_text, anchor="w", fg_color="black", font=("Arial", 10, "bold"))
             label.grid(row=i, column=j, padx=10)
 
+
         i += 1
 
         for empleado in my_cursor:
