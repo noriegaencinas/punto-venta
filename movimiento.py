@@ -18,7 +18,6 @@ GRAY2 = "#D0D4CA"
 LIGHT_BLUE = "#E0F4FF"
 LIGHT_BLUE2 = "#87C4FF"
 LIT_BLUE = "#E0F4FF"
-
 class Movimiento(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
