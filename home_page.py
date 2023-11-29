@@ -25,9 +25,9 @@ MENU_BUTTON_WIDTH = 104
 MENU_BUTTON_HEIGHT = 80
 
 class HomePage(Ventana):
-    def __init__(self):
+    def __init__(self, ventana_dimension, titulo_ventana):
         #Creacion de la ventana general
-        super().__init__("1280x720", "Pagina principal")
+        super().__init__(ventana_dimension, titulo_ventana)
 
         """
         #Creacion del menu
@@ -37,79 +37,94 @@ class HomePage(Ventana):
         menu_bar.add_cascade(label="archivo", menu=menu1)  # Al menu principal le asignamos los menus
         menu1.add_command(label="Nuevo")  # Son los menuitems, pueden tener funciones
         """
+        win_width = int(ventana_dimension.split("x")[0])
+        win_height = int(ventana_dimension.split("x")[1])
 
+        menu_frame = customtkinter.CTkFrame(master=self.window, width=win_width, height=MENU_BUTTON_HEIGHT, fg_color=LIGHT_BLUE2, corner_radius=0)
+        menu_frame.pack(fill="both", expand=False)
         def boton_venta():
-            test = HomePage()
             pass
         image_venta = customtkinter.CTkImage(dark_image=Image.open("images/venta.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_venta = customtkinter.CTkButton(master=self.window, text="Venta", image=image_venta, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT,command=boton_venta)
+        boton_venta = customtkinter.CTkButton(master=menu_frame, text="Venta", image=image_venta, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT,command=boton_venta)
         boton_venta.grid(column=0, row=0)
 
         def boton_imprimir_recibo():
             pass
         image_imprimir = customtkinter.CTkImage(dark_image=Image.open("images/impresora.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_imprimir = customtkinter.CTkButton(master=self.window, text="Imprimir Recibo", image=image_imprimir, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_imprimir = customtkinter.CTkButton(master=menu_frame, text="Imprimir Recibo", image=image_imprimir, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_imprimir.grid(column=1, row=0)
 
         def boton_articulos():
             test_articulos = articulo.Articulo(self.window, ventana_dimension="960x540", titulo_ventana="Catalogo Articulos")
         image_articulos = customtkinter.CTkImage(dark_image=Image.open("images/articulos.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_articulos = customtkinter.CTkButton(master=self.window, text="Articulos", image=image_articulos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_articulos = customtkinter.CTkButton(master=menu_frame, text="Articulos", image=image_articulos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_articulos.grid(column=2, row=0)
 
         def boton_pedidos():
             pass
         image_pedidos = customtkinter.CTkImage(dark_image=Image.open("images/pedidos.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_pedidos = customtkinter.CTkButton(master=self.window, text="Pedidos", image=image_pedidos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_pedidos = customtkinter.CTkButton(master=menu_frame, text="Pedidos", image=image_pedidos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_pedidos.grid(column=3, row=0)
         def boton_inventario():
             inventario = Inventario()
         image_inventario = customtkinter.CTkImage(dark_image=Image.open("images/inventario.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_inventario = customtkinter.CTkButton(master=self.window, text="Inventarios", image=image_inventario, compound="top", command=boton_inventario, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_inventario = customtkinter.CTkButton(master=menu_frame, text="Inventarios", image=image_inventario, compound="top", command=boton_inventario, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_inventario.grid(column=4, row=0)
 
         def boton_lista_inventario():
             test_lista_inventario = lista_inventario.ListaInventario(self.window, "1000x480", "top")
         image_lista_inventario = customtkinter.CTkImage(dark_image=Image.open("images/inventario_lista.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_lista_inventario = customtkinter.CTkButton(master=self.window, text="Lista Inventarios", image=image_lista_inventario, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_lista_inventario)
+        boton_lista_inventario = customtkinter.CTkButton(master=menu_frame, text="Lista Inventarios", image=image_lista_inventario, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_lista_inventario)
         boton_lista_inventario.grid(column=5, row=0)
 
         def boton_entrada_salida_dinero():
             pass
         image_caja_movimientos = customtkinter.CTkImage(dark_image=Image.open("images/entrada_salida_dinero.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_caja_movimientos = customtkinter.CTkButton(master=self.window, text="Caja Movimiento", image=image_caja_movimientos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_caja_movimientos = customtkinter.CTkButton(master=menu_frame, text="Caja Movimiento", image=image_caja_movimientos, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_caja_movimientos.grid(column=6, row=0)
 
         def boton_mov_del_dia():
             pass
         image_mov_dia = customtkinter.CTkImage(dark_image=Image.open("images/movimientos_del_dia.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_mov_dia = customtkinter.CTkButton(master=self.window, text="Movimientos del dia", image=image_mov_dia, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_mov_dia = customtkinter.CTkButton(master=menu_frame, text="Movimientos del dia", image=image_mov_dia, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_mov_dia.grid(column=7, row=0)
 
         def boton_empresa():
             test_empresa = empresa.Empresa(self.window, ventana_dimension="720x520", titulo_ventana="Empresa")
         image_empresa = customtkinter.CTkImage(dark_image=Image.open("images/empresa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_empresa = customtkinter.CTkButton(master=self.window, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
+        boton_empresa = customtkinter.CTkButton(master=menu_frame, text="Empresa", image=image_empresa, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_empresa)
         boton_empresa.grid(column=8, row=0)
 
         def boton_usuarios():
             #test_usuarios = usuarios.Usuario(self.window, ventana_dimension="720x480", titulo_ventana="Usuario")
             pass
         image_usuarios = customtkinter.CTkImage(dark_image=Image.open("images/usuarios.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_usuarios = customtkinter.CTkButton(master=self.window, text="Usuarios", image=image_usuarios, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_usuarios = customtkinter.CTkButton(master=menu_frame, text="Usuarios", image=image_usuarios, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_usuarios.grid(column=9, row=0)
 
         def boton_acerca_de():
             test_acerca_de = acerca_de.Acerca_de(self.window, ventana_dimension="500x600", titulo_ventana="Acerca de")
         image_acerca_de = customtkinter.CTkImage(dark_image=Image.open("images/acerca_de.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_acerca_de = customtkinter.CTkButton(master=self.window, text="Acerca de", image=image_acerca_de, compound="top", command=boton_acerca_de, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_acerca_de = customtkinter.CTkButton(master=menu_frame, text="Acerca de", image=image_acerca_de, compound="top", command=boton_acerca_de, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_acerca_de.grid(column=10, row=0)
 
         def boton_salir():
             self.window.destroy()
         image_salir = customtkinter.CTkImage(dark_image=Image.open("images/salir.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_salir = customtkinter.CTkButton(master=self.window, text="Salir", image=image_salir, compound="top", command=boton_salir, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
+        boton_salir = customtkinter.CTkButton(master=menu_frame, text="Salir", image=image_salir, compound="top", command=boton_salir, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_salir.grid(column=11, row=0)
+
+        opciones_frame = customtkinter.CTkFrame(master=self.window, width=1920, height=16, fg_color=BLUE,
+                                                corner_radius=0)
+        opciones_frame.pack(fill="both", expand=False)
+
+        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH,
+                                                height=16, font=("Arial", 10))
+        label_opciones.grid(row=0, column=0)
+
+        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH,
+                                                height=16, font=("Arial", 10))
+        label_pantalla.grid(row=0, column=1)
 
         # Cargar imagen
         logo_image_path = "images/logo.png"
@@ -121,4 +136,4 @@ class HomePage(Ventana):
 
 # Para testear el codigo
 if __name__ == '__main__':
-    test = HomePage()
+    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal")
