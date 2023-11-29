@@ -33,7 +33,6 @@ class HomePage(Ventana):
     def __init__(self, ventana_dimension, titulo_ventana, permisos):
         #Creacion de la ventana general
         super().__init__(ventana_dimension, titulo_ventana)
-
         """
         #Creacion del menu
         menu_bar = tkinter.Menu(window) # Menu principal, es la linea sin nada

@@ -4,7 +4,14 @@ import mysql.connector
 import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter
-
+BLUE = "#0766AD" #Para lo del telcel
+LESS_BLUE = "#29ADB2"
+LIGHT_GREEN = "#C5E898"
+GRAY = "#F3F3F3"
+GRAY2 = "#D0D4CA"
+LIGHT_BLUE = "#E0F4FF"
+LIGHT_BLUE2 = "#87C4FF"
+LIT_BLUE = "#E0F4FF"
 class Usuarios(tk.Tk):
     def __init__(self, previous_position=None):
         super().__init__()
@@ -21,7 +28,7 @@ class Usuarios(tk.Tk):
             password='',
             port='3306',
             database='distribuidor')
-        self.configure(bg="black")
+        self.configure(bg=LIT_BLUE)
         self.display()
 
     def display(self):
@@ -33,7 +40,7 @@ class Usuarios(tk.Tk):
         # Nombres de las columnas
         labels = ['UsuarioID', 'Nombre', 'Apellido', 'NombreUsuario', 'Contraseña']
         for j, label_text in enumerate(labels):
-            label = CTkLabel(self, width=15, text=label_text, anchor="w", fg_color="black", font=("Arial", 10, "bold"))
+            label = CTkLabel(self, width=15, text=label_text, anchor="w", fg_color=LIT_BLUE, font=("Arial", 10, "bold"))
             label.grid(row=i, column=j, padx=10)
 
         i += 1
@@ -41,23 +48,23 @@ class Usuarios(tk.Tk):
 
         for empleado in my_cursor:
             # Columna UsuarioID
-            e_id = CTkLabel(self, width=10, text=str(empleado[0]), anchor="w", fg_color="black")
+            e_id = CTkLabel(self, width=10, text=str(empleado[0]), anchor="w", fg_color=LIT_BLUE)
             e_id.grid(row=i, column=0, padx=10)
 
             # Columna Nombre
-            e_nombre = CTkLabel(self, width=15, text=str(empleado[1]), anchor="w", fg_color="black")
+            e_nombre = CTkLabel(self, width=15, text=str(empleado[1]), anchor="w", fg_color=LIT_BLUE)
             e_nombre.grid(row=i, column=1, padx=10)
 
             # Columna Apellido
-            e_apellido = CTkLabel(self, width=15, text=str(empleado[2]), anchor="w", fg_color="black")
+            e_apellido = CTkLabel(self, width=15, text=str(empleado[2]), anchor="w", fg_color=LIT_BLUE)
             e_apellido.grid(row=i, column=2, padx=10)
 
             # Columna NombreUsuario
-            e_usuario = CTkLabel(self, width=15, text=str(empleado[3]), anchor="w", fg_color="black")
+            e_usuario = CTkLabel(self, width=15, text=str(empleado[3]), anchor="w", fg_color=LIT_BLUE)
             e_usuario.grid(row=i, column=3, padx=10)
 
             # Columna Contraseña
-            e_contrasena = CTkLabel(self, width=15, text=str(empleado[4]), anchor="w", fg_color="black")
+            e_contrasena = CTkLabel(self, width=15, text=str(empleado[4]), anchor="w", fg_color=LIT_BLUE)
             e_contrasena.grid(row=i, column=4, padx=10)
 
             # Botón Editar
@@ -89,7 +96,7 @@ class Usuarios(tk.Tk):
         self.e5_str_Contrasena.set(s[4])
 
         # Columna UsuarioID
-        e1 = tk.Entry(self, textvariable=self.e1_int_UsuarioID, width=10, state='disabled')
+        e1 = tk.Entry(self, textvariable=self.e1_int_UsuarioID, width=10, state='disabled' )
         e1.grid(row=i, column=0, padx=10)
 
         # Columna Nombre
@@ -136,7 +143,7 @@ class Usuarios(tk.Tk):
             self.e1_int_UsuarioID.get())
         id = self.my_conn.cursor()
         id.execute(
-            "UPDATE Empleados SET Nombre=%s, Apellido=%s, NombreUsuario=%s, Contraseña=%s WHERE UsuarioID=%s", data)
+            "UPDATE Empleados SET Nombre=%s, Apellido=%s, NombreUsuario=%s, Password=%s WHERE UsuarioID=%s", data)
         print("Row updated = ", id.rowcount)
         self.my_conn.commit()
         for w in self.grid_slaves(i):
