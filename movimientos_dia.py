@@ -93,13 +93,13 @@ class MovimientosDia(SubVentana):
 
         my_cursor = self.my_conn.cursor()
         my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos WHERE Fecha='2023-11-28'")
-        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target")
+        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target", bg_color=LESS_BLUE)
         label_tipo.grid(row=0, column=0)
-        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target")
+        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target", bg_color=LESS_BLUE)
         label_motivo.grid(row=0, column=1)
-        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=150, text="Cantidad", cursor="target")
+        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=150, text="Cantidad", cursor="target", bg_color=LESS_BLUE)
         label_cantidad.grid(row=0, column=2)
-        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Fecha", cursor="target")
+        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Fecha", cursor="target", bg_color=LESS_BLUE)
         label_fecha.grid(row=0, column=3)
         global i
         i = 1

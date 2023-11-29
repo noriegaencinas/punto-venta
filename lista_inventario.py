@@ -93,8 +93,20 @@ class ListaInventario(SubVentana):
 
         my_cursor = self.my_conn.cursor()
         my_cursor.execute("SELECT * FROM Productos")
+        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="ProductoID", cursor="target", bg_color=LESS_BLUE)
+        label_tipo.grid(row=0, column=0)
+        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Nombre", cursor="target", bg_color=LESS_BLUE)
+        label_motivo.grid(row=0, column=1)
+        label_desc = customtkinter.CTkLabel(master=table_frame, width=280, text="Descripcion", cursor="target", bg_color=LESS_BLUE)
+        label_desc.grid(row=0, column=2)
+        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Precio", cursor="target", bg_color=LESS_BLUE)
+        label_fecha.grid(row=0, column=3)
+        label_stock = customtkinter.CTkLabel(master=table_frame, width=150, text="Stock", cursor="target", bg_color=LESS_BLUE)
+        label_stock.grid(row=0, column=4)
+        label_cat = customtkinter.CTkLabel(master=table_frame, width=150, text="Categoria", cursor="target",bg_color=LESS_BLUE)
+        label_cat.grid(row=0, column=5)
         global i
-        i = 0
+        i = 1
         for producto in my_cursor:
             print(producto)
             for j in range(len(producto)):
@@ -106,5 +118,5 @@ class ListaInventario(SubVentana):
 
 if __name__ == '__main__':
     test = Ventana("300x300", "titulo")
-    test1 = ListaInventario(test.window, "1000x480", "top")
+    test1 = ListaInventario(test.window, "1100x480", "top")
     test.window.mainloop()
