@@ -1,25 +1,33 @@
+from tkinter import messagebox
+
 import customtkinter
-import tkinter
 import packaging
 from PIL import Image, ImageTk
 import connection
 from ventana_general import *
+import home_page
 
 class Login(Ventana):
     def __init__(self):
         super().__init__("400x400", "Inicio de sesion")
 
-        self.attempts = 0
-
+        cone = connection.Connection()
+        self.permiso = ""
+        self.validacion = False
 
         def login():
             usuario = entry_username.get()
             password = entry_password.get()
-            print(usuario + " " + password)
-            autorizacion = connection.ejecutar_instruccion(statement='SELECT * FROM empleados WHERE NombreUsuario = "' + usuario + '" AND Password = "' + password + '"')
-            if autorizacion == 0:
-                self.attempts += 1
-            return autorizacion
+            SQL_statement_raw = 'SELECT puesto FROM empleados WHERE NombreUsuario = %s AND Password = %s'
+            values = (usuario, password)
+            autorizacion = cone.ejecutar_instruccion(statement=SQL_statement_raw, parametros=values)
+            if not len(autorizacion) > 0: # Si no existe un registro con este usuario o password
+                messagebox.showerror(title="Error", message="Usuario o contraseña incorrectos. \n Vuelve a intentarlo!")
+                entry_username.delete(0, 'end')
+                entry_password.delete(0, 'end')
+            else:
+                self.validacion = True
+                self.window.destroy()
 
         self.frame = customtkinter.CTkFrame(master=self.window)
         self.frame.pack(pady=10,padx=10, fill="both", expand=True)
@@ -44,6 +52,9 @@ class Login(Ventana):
         logo_image_label.pack(pady=12, padx=10)
 
         self.window.mainloop()
+
+    def get_validacion(self):
+        return self.validacion
 
 # Para testear el codigo
 if __name__ == '__main__':
