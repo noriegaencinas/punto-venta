@@ -108,7 +108,7 @@ class Inventario(SubVentana):
                                                 command=boton_guardar)
         boton_guardar.grid(column=1, row=0)
 
-        label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
+        label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Cantidad", text_color="BLACK")
         # label_nombre.pack(pady=5, padx=10, expand=False)
         label_cantidad.grid(column=0, row=1, pady=10)
 

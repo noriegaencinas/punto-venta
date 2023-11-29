@@ -20,7 +20,7 @@ GRAY2 = "#D0D4CA"
 LIGHT_BLUE = "#E0F4FF"
 LIGHT_BLUE2 = "#87C4FF"
 LIT_BLUE = "#E0F4FF"
-class MovimientosDia(SubVentana):
+class Imprimir(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
         self.new_window.config(bg=LIT_BLUE)
@@ -120,5 +120,5 @@ class MovimientosDia(SubVentana):
 
 if __name__ == '__main__':
     test = Ventana("300x300", "titulo")
-    test1 = MovimientosDia(test.window, "880x480", "top")
+    test1 = Imprimir(test.window, "880x480", "top")
     test.window.mainloop()

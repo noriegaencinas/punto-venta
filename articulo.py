@@ -93,20 +93,20 @@ class Articulo(SubVentana):
 
         my_cursor = self.my_conn.cursor()
         my_cursor.execute("SELECT ProductoID, Nombre, Descripcion, Precio  FROM productos")
-        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target", bg_color=LESS_BLUE)
+        label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="ProductoID", cursor="target", bg_color=LESS_BLUE)
         label_tipo.grid(row=0, column=0)
-        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target", bg_color=LESS_BLUE)
+        label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Nombre", cursor="target", bg_color=LESS_BLUE)
         label_motivo.grid(row=0, column=1)
-        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=150, text="Cantidad", cursor="target", bg_color=LESS_BLUE)
+        label_cantidad = customtkinter.CTkLabel(master=table_frame, width=300, text="Descripcion", cursor="target", bg_color=LESS_BLUE)
         label_cantidad.grid(row=0, column=2)
-        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Fecha", cursor="target", bg_color=LESS_BLUE)
+        label_fecha = customtkinter.CTkLabel(master=table_frame, width=150, text="Precio", cursor="target", bg_color=LESS_BLUE)
         label_fecha.grid(row=0, column=3)
         global i
         i = 1
         for producto in my_cursor:
             for j in range(len(producto)):
                 # Cambia el color del texto al crear la etiqueta
-                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIGHT_BLUE2)
+                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIT_BLUE)
                 e.grid(row=i, column=j)
             i = i + 1
 

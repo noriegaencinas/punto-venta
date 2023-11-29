@@ -114,7 +114,7 @@ class Venta(SubVentana):
         label_subtotalnum = customtkinter.CTkLabel(master=left_frame, text="0.00", width=150, bg_color=GRAY)
         label_subtotalnum.grid(row=1, column=5)
 
-        right_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color="red", corner_radius=0)
+        right_frame = customtkinter.CTkFrame(master=main_frame, width=win_width, height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         right_frame.pack(padx=20, pady=20, fill='both', expand=True)
 
         def boton_buscar():
