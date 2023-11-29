@@ -43,8 +43,11 @@ class ListaInventario(SubVentana):
         label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
         label_opciones.grid(row=0, column=0)
 
-        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
-        label_pantalla.grid(row=0, column=1)
+        label_datos = customtkinter.CTkLabel(master=opciones_frame, text="Modificaciones de datos", width=MENU_BUTTON_WIDTH*4, height=16, font=("Arial", 10))
+        label_datos.grid(row=0, column=1)
+
+        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
+        label_pantalla.grid(row=0, column=2)
 
         def boton_actualizar():
             pass
@@ -93,6 +96,7 @@ class ListaInventario(SubVentana):
         global i
         i = 0
         for producto in my_cursor:
+            print(producto)
             for j in range(len(producto)):
                 # Cambia el color del texto al crear la etiqueta
                 e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target")
