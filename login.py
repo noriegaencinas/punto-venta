@@ -26,6 +26,7 @@ class Login(Ventana):
                 entry_username.delete(0, 'end')
                 entry_password.delete(0, 'end')
             else:
+                self.permiso = autorizacion[0][0]
                 self.window.destroy()
                 self.validacion = True
 
@@ -55,6 +56,9 @@ class Login(Ventana):
 
     def get_validacion(self):
         return self.validacion
+
+    def get_permiso(self):
+        return self.permiso
 
 # Para testear el codigo
 if __name__ == '__main__':

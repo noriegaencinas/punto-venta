@@ -3,7 +3,7 @@ import mysql.connector
 class Connection:
     def __init__(self):
         #self.connection = mysql.connector.connect(host='sql3.freesqldatabase.com', database='sql3665921', user="sql3665921", password="AJXgrEaPv5", port="3306")
-        self.connection = mysql.connector.connect(host='localhost', database='distribuidoratelcel', user="root", password="", port="3306")
+        self.connection = mysql.connector.connect(host='localhost', database='distribuidor', user="root", password="", port="3306")
         self.cursor = self.connection.cursor()  # Es el objeto para ejecutar las statements y comunicarse con mysql
 
     def ejecutar_instruccion(self, statement, parametros=()):

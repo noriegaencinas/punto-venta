@@ -5,7 +5,8 @@ class Main:
         test = login.Login()
 
         if test.get_validacion():
-            home_page.HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal")
+            permisos = test.get_permiso()
+            home_page.HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos=permisos)
 
 if __name__ == '__main__':
     test = Main()

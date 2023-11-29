@@ -30,7 +30,7 @@ MENU_BUTTON_WIDTH = 104
 MENU_BUTTON_HEIGHT = 80
 
 class HomePage(Ventana):
-    def __init__(self, ventana_dimension, titulo_ventana):
+    def __init__(self, ventana_dimension, titulo_ventana, permisos):
         #Creacion de la ventana general
         super().__init__(ventana_dimension, titulo_ventana)
 
@@ -146,8 +146,11 @@ class HomePage(Ventana):
         # Usar imagen label
         logo_image_label = customtkinter.CTkLabel(master=self.window, image=logo_image, text="", fg_color="transparent").place(x=(self.win_width/2) - 250,y=(self.win_height/2) - 125)
 
+        new_label = customtkinter.CTkLabel(master=self.window, text=permisos, font=("Arial", 12, "bold"), text_color="BLACK", height=12)
+        new_label.place(x=10, y=700)
+
         self.window.mainloop()  # Permite que la ventana no se cierre.
 
 # Para testear el codigo
 if __name__ == '__main__':
-    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal")
+    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos="Administrador")
