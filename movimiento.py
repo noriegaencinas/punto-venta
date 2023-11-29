@@ -1,3 +1,5 @@
+import mysql
+import mysql.connector
 from PIL import Image
 from ventana_general import *
 import customtkinter
@@ -22,7 +24,12 @@ LIT_BLUE = "#E0F4FF"
 class Movimiento(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
-
+        self.my_conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            port='3306',
+            database='distribuidor')
         # Dimensiones de la ventana
         win_width = int(ventana_dimension.split("x")[0])
         win_height = int(ventana_dimension.split("x")[1])
@@ -39,30 +46,11 @@ class Movimiento(SubVentana):
         label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
         label_pantalla.grid(row=0, column=1)
 
-        def boton_iniciar():
-            pass
-        boton_iniciar = customtkinter.CTkImage(dark_image=Image.open("images/lupa.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_iniciar = customtkinter.CTkButton(master=menu_frame, text="Iniciar", image=boton_iniciar, compound="top", command=boton_iniciar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_iniciar.grid(column=0, row=0)
-
-        def boton_guardar():
-            pass
-        boton_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=boton_guardar, compound="top", command=boton_guardar)
-        boton_guardar.grid(column=1, row=0)
-
         def boton_editar():
             pass
-        boton_editar = customtkinter.CTkImage(dark_image=Image.open("images/editar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_editar = customtkinter.CTkButton(master=menu_frame, text="Editar", image=boton_editar, compound="top", command=boton_editar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
+        image_editar = customtkinter.CTkImage(dark_image=Image.open("images/editar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_editar = customtkinter.CTkButton(master=menu_frame, text="Editar", image=image_editar, compound="top", command=boton_editar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
         boton_editar.grid(column=2, row=0)
-
-        def boton_eliminar():
-            pass
-        image_eliminar = customtkinter.CTkImage(dark_image=Image.open("images/eliminar.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_eliminar = customtkinter.CTkButton(master=menu_frame, text="Eliminar", image=image_eliminar, compound="top", command=boton_eliminar, bg_color="transparent", width=MENU_BUTTON_WIDTH)
-        boton_eliminar.grid(column=3, row=0)
-
         def boton_salir():
             self.new_window.destroy()
         image_salir = customtkinter.CTkImage(dark_image=Image.open("images/salir_img.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
@@ -71,14 +59,6 @@ class Movimiento(SubVentana):
 
         opciones_frame = customtkinter.CTkFrame(master=self.new_window, width=win_width, fg_color=LIGHT_BLUE, corner_radius=0)
         opciones_frame.pack(fill="both", expand=True)
-
-        """
-        left_entries_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width//4), height=win_height, fg_color="BLUE", corner_radius=0, sticky='EW')
-        left_entries_frame.place(x=0, y=0)
-
-        right_entries_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 4), height=win_height, fg_color="GREEN", corner_radius=0, sticky='EW')
-        right_entries_frame.place(x=(win_width // 4), y=0)
-        """
 
         entries_main_frame = customtkinter.CTkFrame(master=opciones_frame, width=(win_width // 2), height=win_height, fg_color=LIT_BLUE, corner_radius=0)
         entries_main_frame.place(x=0, y=0)
@@ -103,15 +83,33 @@ class Movimiento(SubVentana):
         entry_nombre = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
         # entry_nombre.pack(pady=5, padx=10)
         entry_nombre.grid(column=1, row=1)
+
         def optionmenu_callback(choice):
             pass
 
-        optionmenu_var = customtkinter.StringVar(value="option 2")
-        optionmenu = customtkinter.CTkOptionMenu(master=entries_frame ,values=["option 1", "option 2"],
+        optionmenu_var = customtkinter.StringVar(value="Retiro")
+        optionmenu = customtkinter.CTkOptionMenu(master=entries_frame ,values=["Retiro", "Ingreso"],
                                                  command=optionmenu_callback,
                                                  width=200,
                                                  variable=optionmenu_var)
         optionmenu.grid(column=1, row=0)
+
+        def boton_guardar():
+            motivo = entry_motivo.get()
+            cantidad = entry_cantidad.get()
+            cantidad=int(cantidad)
+            tipo = optionmenu_var.get()
+            # print(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            my_cursor = self.my_conn.cursor()
+            my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            # my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES ('{tipo}','{motivo}','{cantidad}', NOW())")
+            self.my_conn.commit()
+
+        image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"),
+                                               size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top",
+                                                command=boton_guardar)
+        boton_guardar.grid(column=1, row=0)
 
         label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
         # label_nombre.pack(pady=5, padx=10, expand=False)
