@@ -109,7 +109,7 @@ class MovimientosDia(SubVentana):
                 e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIGHT_BLUE2)
                 e.grid(row=i, column=j)
             i = i + 1
-        my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos")
+        my_cursor.execute("SELECT VentaID, ClienteID,TotalVenta, FechaHoraVenta FROM ventas")
         for producto in my_cursor:
             for j in range(len(producto)):
                 # Cambia el color del texto al crear la etiqueta
