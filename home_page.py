@@ -114,17 +114,27 @@ class HomePage(Ventana):
         boton_salir = customtkinter.CTkButton(master=menu_frame, text="Salir", image=image_salir, compound="top", command=boton_salir, width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT)
         boton_salir.grid(column=11, row=0)
 
-        opciones_frame = customtkinter.CTkFrame(master=self.window, width=1920, height=16, fg_color=BLUE,
+        opciones_frame = customtkinter.CTkFrame(master=self.window, width=win_width, height=16, fg_color=BLUE,
                                                 corner_radius=0)
         opciones_frame.pack(fill="both", expand=False)
 
-        label_opciones = customtkinter.CTkLabel(master=opciones_frame, text="Opciones", width=MENU_BUTTON_WIDTH,
-                                                height=16, font=("Arial", 10))
-        label_opciones.grid(row=0, column=0)
+        label_venta = customtkinter.CTkLabel(master=opciones_frame, text="Ventas", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_venta.grid(row=0, column=0)
 
-        label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Pantalla", width=MENU_BUTTON_WIDTH,
-                                                height=16, font=("Arial", 10))
-        label_pantalla.grid(row=0, column=1)
+        label_catalogo = customtkinter.CTkLabel(master=opciones_frame, text="Catálogos", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_catalogo.grid(row=0, column=1)
+
+        label_inventarios = customtkinter.CTkLabel(master=opciones_frame, text="Inventarios", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_inventarios.grid(row=0, column=2)
+
+        label_caja_registradora = customtkinter.CTkLabel(master=opciones_frame, text="Caja Registradora", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_caja_registradora.grid(row=0, column=3)
+
+        label_configuracion = customtkinter.CTkLabel(master=opciones_frame, text="Configuración", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_configuracion.grid(row=0, column=4)
+
+        label_opciones_sistema = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de Sistema", width=MENU_BUTTON_WIDTH * 2, height=16, font=("Arial", 10))
+        label_opciones_sistema.grid(row=0, column=5)
 
         # Cargar imagen
         logo_image_path = "images/logo.png"
