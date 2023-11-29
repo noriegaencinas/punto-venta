@@ -101,9 +101,11 @@ class HomePage(Ventana):
         boton_empresa.grid(column=8, row=0)
 
         def boton_usuarios():
-            test_usuarios = usuarios.Usuario(self.window, ventana_dimension="720x480", titulo_ventana="Usuario")
+            test_usuarios = usuarios.Usuarios()
         image_usuarios = customtkinter.CTkImage(dark_image=Image.open("images/usuarios.png"), size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
         boton_usuarios = customtkinter.CTkButton(master=menu_frame, text="Usuarios", image=image_usuarios, compound="top", width=MENU_BUTTON_WIDTH, height=MENU_BUTTON_HEIGHT, command=boton_usuarios)
+        if permisos != "Admin":
+            boton_usuarios.configure(state='disabled')
         boton_usuarios.grid(column=9, row=0)
 
         def boton_acerca_de():
@@ -153,4 +155,4 @@ class HomePage(Ventana):
 
 # Para testear el codigo
 if __name__ == '__main__':
-    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos="Administrador")
+    test = HomePage(ventana_dimension="1280x720", titulo_ventana="Página Principal", permisos="Admin")

@@ -22,7 +22,7 @@ LIGHT_BLUE2 = "#87C4FF"
 LIT_BLUE = "#E0F4FF"
 
 class Empresa(SubVentana):
-    def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
+    def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str, permisos:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
 
         # Dimensiones de la ventana
@@ -107,6 +107,8 @@ class Empresa(SubVentana):
 
                 new_text = customtkinter.CTkTextbox(master=entries_frame, width=200, height=12)
                 new_text.insert("0.0", my_data["empresa info"][filas_names[i]])
+                if permisos != 'Admin':
+                    new_text.configure(state='disabled')
                 new_text.grid(column=1, row=i, pady=2)
 
                 label_obj[filas_names[i]] = new_label
@@ -123,6 +125,6 @@ class Empresa(SubVentana):
 if __name__ == '__main__':
     test = Ventana("300x400", "titulo")
 
-    test1 = Empresa(test.window, "720x520", "top")
+    test1 = Empresa(test.window, "720x520", "top", "empleaod")
 
     test.window.mainloop()
