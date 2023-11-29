@@ -10,7 +10,7 @@ class Inventario:
             host="localhost",
             user="root",
             passwd="",
-            database="distribuidor"
+            database="distribuidort"
         )
 
         # Declaración del conector para ejecutar las querys

@@ -23,7 +23,7 @@ LIT_BLUE = "#E0F4FF"
 class MovimientosDia(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
-
+        self.new_window.config(bg=LIT_BLUE)
         self.my_conn = mysql.connector.connect(
             host='localhost',
             user='root',
@@ -92,7 +92,7 @@ class MovimientosDia(SubVentana):
         table_frame.pack(padx=20, pady=20, fill='both', expand=True)
 
         my_cursor = self.my_conn.cursor()
-        my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos WHERE Fecha='2023-11-28'")
+        my_cursor.execute("SELECT TipoMovimiento, Motivo, Cantidad, Fecha FROM movimientos")
         label_tipo = customtkinter.CTkLabel(master=table_frame, width=150, text="Tipo de movimiento", cursor="target", bg_color=LESS_BLUE)
         label_tipo.grid(row=0, column=0)
         label_motivo = customtkinter.CTkLabel(master=table_frame, width=150, text="Motivo", cursor="target", bg_color=LESS_BLUE)
@@ -106,7 +106,7 @@ class MovimientosDia(SubVentana):
         for producto in my_cursor:
             for j in range(len(producto)):
                 # Cambia el color del texto al crear la etiqueta
-                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target")
+                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIGHT_BLUE2)
                 e.grid(row=i, column=j)
             i = i + 1
 

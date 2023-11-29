@@ -23,7 +23,7 @@ LIT_BLUE = "#E0F4FF"
 class ListaInventario(SubVentana):
     def __init__(self, VentanaBase:object, ventana_dimension:str, titulo_ventana:str):
         super().__init__(VentanaBase, ventana_dimension, titulo_ventana)
-
+        self.new_window.config(bg=LIT_BLUE)
         self.my_conn = mysql.connector.connect(
             host='localhost',
             user='root',
@@ -48,6 +48,8 @@ class ListaInventario(SubVentana):
 
         label_pantalla = customtkinter.CTkLabel(master=opciones_frame, text="Opciones de pantalla", width=MENU_BUTTON_WIDTH, height=16, font=("Arial", 10))
         label_pantalla.grid(row=0, column=2)
+
+
 
         def boton_actualizar():
             pass
@@ -111,10 +113,9 @@ class ListaInventario(SubVentana):
             print(producto)
             for j in range(len(producto)):
                 # Cambia el color del texto al crear la etiqueta
-                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target")
+                e = customtkinter.CTkLabel(master=table_frame, width=150, text=str(producto[j]), cursor="target", bg_color=LIGHT_BLUE2)
                 e.grid(row=i, column=j)
             i = i + 1
-
 
 if __name__ == '__main__':
     test = Ventana("300x300", "titulo")

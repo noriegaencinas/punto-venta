@@ -1,3 +1,5 @@
+import tkinter
+
 import mysql
 import mysql.connector
 from PIL import Image
@@ -73,13 +75,7 @@ class Movimiento(SubVentana):
                                        corner_radius=8)
         label_tipo.grid(column=0, row=0)
 
-        label_nombre = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
-        # label_nombre.pack(pady=5, padx=10, expand=False)
-        label_nombre.grid(column=0, row=1)
 
-        entry_nombre = customtkinter.CTkEntry(master=entries_frame, placeholder_text="algo", width=200)
-        # entry_nombre.pack(pady=5, padx=10)
-        entry_nombre.grid(column=1, row=1)
 
         def optionmenu_callback(choice):
             pass
@@ -91,24 +87,7 @@ class Movimiento(SubVentana):
                                                  variable=optionmenu_var)
         optionmenu.grid(column=1, row=0)
 
-        def boton_guardar():
-            motivo = entry_motivo.get()
-            cantidad = entry_cantidad.get()
-            cantidad=int(cantidad)
-            tipo = optionmenu_var.get()
-            # print(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
-            my_cursor = self.my_conn.cursor()
-            my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
-            # my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES ('{tipo}','{motivo}','{cantidad}', NOW())")
-            self.my_conn.commit()
-
-        image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"),
-                                               size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
-        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top",
-                                                command=boton_guardar)
-        boton_guardar.grid(column=1, row=0)
-
-        label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Nombre", text_color="BLACK")
+        label_cantidad = customtkinter.CTkLabel(master=entries_frame, text="Cantidad", text_color="BLACK")
         # label_nombre.pack(pady=5, padx=10, expand=False)
         label_cantidad.grid(column=0, row=1, pady=10)
 
@@ -123,6 +102,24 @@ class Movimiento(SubVentana):
         entry_motivo = customtkinter.CTkEntry(master=entries_frame, placeholder_text="Escriba aqui su motivo...", width=200)
         # entry_nombre.pack(pady=5, padx=10)
         entry_motivo.grid(column=1, row=2)
+
+        def boton_guardar():
+            motivo = entry_motivo.get()
+            cantidad = entry_cantidad.get()
+            cantidad=int(cantidad)
+            tipo = optionmenu_var.get()
+            # print(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            my_cursor = self.my_conn.cursor()
+            my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES( '{tipo}', '{motivo}', {cantidad}, NOW())")
+            # my_cursor.execute(f"INSERT INTO movimientos (TipoMovimiento, Motivo, Cantidad, Fecha) VALUES ('{tipo}','{motivo}','{cantidad}', NOW())")
+            self.my_conn.commit()
+            tkinter.messagebox.showinfo(title="Success!", message="Se ha realizado la operacion con exito")
+
+        image_guardar = customtkinter.CTkImage(dark_image=Image.open("images/guardar_img.png"),
+                                               size=(MENU_IMAGE_WIDTH, MENU_IMAGE_HEIGHT))
+        boton_guardar = customtkinter.CTkButton(master=menu_frame, text="Guardar", image=image_guardar, compound="top",
+                                                command=boton_guardar)
+        boton_guardar.grid(column=1, row=0)
 
         # Cargar imagen
         logo_image_path = "images/logo_distribuidora.png"
